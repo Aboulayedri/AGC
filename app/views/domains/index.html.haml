@@ -1,0 +1,22 @@
+- model_class = Domain
+.page-header
+  %h1 Les Domaines
+%table.table.table-striped
+  %thead
+    %tr
+      %th Nom
+      %th Responsable
+      %th Description
+      %th Actions
+  %tbody
+    - @domains.each do |domain|
+      %tr
+        %td= domain.name
+        %td= domain.responsable.try(:name)
+        %td= domain.description
+        %td
+          = link_to "Consulter", domain, :class => 'btn btn-mini'
+          = link_to "Modifier", edit_domain_path(domain), :class => 'btn btn-mini'
+          = link_to "Supprimer", domain_path(domain), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+
+= link_to "Nouveau Domaine", new_domain_path, :class => 'btn btn-primary'

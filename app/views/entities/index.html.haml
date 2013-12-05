@@ -1,0 +1,22 @@
+- model_class = Entity
+.page-header
+  %h1 Les Entités
+%table.table.table-striped
+  %thead
+    %tr
+      %th Nom
+      %th Manager
+      %th Description
+      %th Actions
+  %tbody
+    - @entities.each do |entity|
+      %tr
+        %td= entity.name
+        %td= entity.manager.try(:name)
+        %td= entity.description
+        %td
+          = link_to "Consulter", entity, :class => 'btn btn-mini'
+          = link_to "Modifier", edit_entity_path(entity), :class => 'btn btn-mini'
+          = link_to "Supprimer", entity_path(entity), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+
+= link_to "Nouvelle Entité", new_entity_path, :class => 'btn btn-primary'
