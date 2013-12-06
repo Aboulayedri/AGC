@@ -1,0 +1,26 @@
+- model_class = Project
+.page-header
+  %h1 Les Projets
+%table.table.table-striped
+  %thead
+    %tr
+      %th Nom
+      %th Domaine
+      %th Chef
+      %th Maître d'ouvrage
+      %th Description
+      %th Actions
+  %tbody
+    - @projects.each do |project|
+      %tr
+        %td= project.name
+        %td= project.domain.name
+        %td= project.chef.name
+        %td= project.maitrise_ouvrage.name
+        %td= project.description
+        %td
+          = link_to "Consulter", project, :class => 'btn btn-mini'
+          = link_to "Modifier", edit_project_path(project), :class => 'btn btn-mini'
+          = link_to "Supprimer", project_path(project), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+
+= link_to "Nouveau Projet", new_project_path, :class => 'btn btn-primary'

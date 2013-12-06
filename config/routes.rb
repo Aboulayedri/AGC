@@ -1,4 +1,8 @@
 AGCDri::Application.routes.draw do
+  resources :proposals
+
+  resources :projects
+
   resources :collaborators
 
   resources :domains

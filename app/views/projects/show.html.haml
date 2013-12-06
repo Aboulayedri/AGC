@@ -1,0 +1,29 @@
+- model_class = Project
+.page-header
+  %h1 Projet
+
+%p
+  %strong Nom :
+  %br
+  = @project.name
+%p
+  %strong Domaine :
+  %br
+  = @project.domain.name
+%p
+  %strong Chef :
+  %br
+  = @project.chef.name
+%p
+  %strong Maîtrise d'ouvrage :
+  %br
+  = @project.maitrise_ouvrage.name
+%p
+  %strong Description
+  %br
+  = @project.description
+
+.form-actions
+  = link_to "Retour aux Projets", projects_path, :class => 'btn'
+  = link_to "Modifier", edit_project_path(@project), :class => 'btn'
+  = link_to "Supprimer", project_path(@project), :method => "delete", :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-danger'
