@@ -1,5 +1,5 @@
 = simple_form_for @proposal, :html => { :class => 'form-horizontal' } do |f|
-  = f.association :consultant, collection: Collaborator.consultants.all(order: "nom"), prompt: "Sélectionner le consultant"
+  = f.association :consultant, collection: Collaborator.consultants, prompt: "Sélectionner le consultant"
   = f.input :date
   = f.input :nbre_jour, label: "Nombre de jours"
   = f.input :etat

@@ -1,4 +1,10 @@
 AGCDri::Application.routes.draw do
+  root "entities#index"
+
+  resources :lists
+
+  resources :requests
+
   resources :proposals
 
   resources :projects

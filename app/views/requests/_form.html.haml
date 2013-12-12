@@ -1,0 +1,8 @@
+= simple_form_for @request, :html => { :class => 'form-horizontal' } do |f|
+  = f.association :project
+  = f.association :consultant, collection: Collaborator.consultants
+  = f.input :date
+  = f.input :etat, collection: ["en attente", "accepctée", "refusée", "annulée"]
+  .form-actions
+    = f.button :submit, :class => 'btn-primary'
+    = link_to "Annuler", requests_path, :class => 'btn'

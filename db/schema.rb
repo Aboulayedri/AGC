@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131206215410) do
+ActiveRecord::Schema.define(version: 20131212143253) do
 
   create_table "collaborators", force: true do |t|
     t.string   "prenom"
@@ -46,6 +46,13 @@ ActiveRecord::Schema.define(version: 20131206215410) do
     t.integer  "manager_id"
   end
 
+  create_table "lists", force: true do |t|
+    t.integer  "entity_id"
+    t.date     "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "projects", force: true do |t|
     t.string   "name"
     t.integer  "domain_id"
@@ -60,6 +67,16 @@ ActiveRecord::Schema.define(version: 20131206215410) do
     t.integer  "consultant_id"
     t.date     "date"
     t.integer  "nbre_jour"
+    t.string   "etat"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "list_id"
+  end
+
+  create_table "requests", force: true do |t|
+    t.integer  "project_id"
+    t.integer  "consultant_id"
+    t.date     "date"
     t.string   "etat"
     t.datetime "created_at"
     t.datetime "updated_at"

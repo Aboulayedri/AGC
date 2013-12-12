@@ -10,6 +10,7 @@ class EntitiesController < ApplicationController
   # GET /entities/1
   # GET /entities/1.json
   def show
+    @list = @entity.lists.new
   end
 
   # GET /entities/new

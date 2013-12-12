@@ -1,0 +1,23 @@
+- model_class = Request
+.page-header
+  %h1 Les Demandes
+%table.table.table-striped
+  %thead
+    %tr
+      %th Projet
+      %th Consultant
+      %th Date
+      %th Actions
+  %tbody
+    - @requests.each do |request|
+      %tr
+        %td= request.project.name
+        %td= request.consultant.name
+        %td= request.date
+        %td= request.etat
+        %td
+          = link_to "Consulter", request, :class => 'btn btn-mini'
+          = link_to "Modifier", edit_request_path(request), :class => 'btn btn-mini'
+          = link_to "Supprimer", request_path(request), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+
+= link_to "Nouvelle Demande", new_request_path, :class => 'btn btn-primary'

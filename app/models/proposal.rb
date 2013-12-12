@@ -9,6 +9,7 @@
 #  etat          :string(255)
 #  created_at    :datetime
 #  updated_at    :datetime
+#  list_id       :integer
 #
 
 class Proposal < ActiveRecord::Base
@@ -16,4 +17,5 @@ class Proposal < ActiveRecord::Base
   validates :date,             presence: { message: "Ne peut être vide" }
 
   belongs_to :consultant, class_name: "Collaborator"
+  belongs_to :list
 end

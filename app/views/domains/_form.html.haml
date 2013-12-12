@@ -1,6 +1,6 @@
 = simple_form_for @domain, :html => { :class => 'form-horizontal' } do |f|
   = f.input :name, label: "Nom"
-  = f.association :responsable, collection: Collaborator.responsables.all(order: "nom"), prompt: "Sélectionner le responsable"
+  = f.association :responsable, collection: Collaborator.responsables, prompt: "Sélectionner le responsable"
   = f.input :description
   .form-actions
     = f.button :submit, :class => 'btn-primary'

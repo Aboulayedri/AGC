@@ -29,7 +29,7 @@
           %a.brand(href="#") AGCDri
           .container.nav-collapse
             %ul.nav.pull-right
-              %li= link_to "Accueil", "/path1"
+              %li= link_to "Accueil", root_path
               %li= link_to "Aide", "/path2"
               %li= link_to "Se connecter", "/path3"
 
@@ -45,6 +45,7 @@
               %li= link_to "Collaborateurs", collaborators_path
               %li= link_to "Projets", projects_path
               %li= link_to "Propositions", proposals_path
+              %li= link_to "Demandes", requests_path
         .span9
           = bootstrap_flash
           = yield
