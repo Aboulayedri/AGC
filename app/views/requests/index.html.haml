@@ -1,23 +1,89 @@
 - model_class = Request
 .page-header
-  %h1 Les Demandes
+  %h1
+    Demandes
+    = Time.now.next_week.strftime("S%W %Y")
+%h2 Les demandes à valider
 %table.table.table-striped
   %thead
     %tr
       %th Projet
-      %th Consultant
+      %th Consultant proposé
       %th Date
+      %th Etat
       %th Actions
   %tbody
-    - @requests.each do |request|
+    - @demandes_encours.each do |request|
       %tr
         %td= request.project.name
-        %td= request.consultant.name
+        %td= request.proposal.name
+        %td= request.date
+        %td= request.etat
+        %td
+          = link_to "Consulter", request,                       :class => 'btn btn-mini'
+          = link_to "Accepter",  accepter_request_path(request), :class => 'btn btn-mini'
+          = link_to "Refuser",   refuser_request_path(request),  :class => 'btn btn-mini'
+          =# link_to "Modifier", edit_request_path(request), :class => 'btn btn-mini'
+          =# link_to "Supprimer", request_path(request), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+%h2 Les demandes acceptées
+%table.table.table-striped
+  %thead
+    %tr
+      %th Projet
+      %th Consultant proposé
+      %th Date
+      %th Etat
+      %th Actions
+  %tbody
+    - @demandes_acceptees.each do |request|
+      %tr
+        %td= request.project.name
+        %td= request.proposal.name
+        %td= request.date
+        %td= request.etat
+        %td
+          = link_to "Consulter", request,                        :class => 'btn btn-mini'
+          = link_to "Confirmer", confirmer_request_path(request), :class => 'btn btn-mini'
+          =# link_to "Modifier", edit_request_path(request), :class => 'btn btn-mini'
+          =# link_to "Supprimer", request_path(request), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+%h2 Les demandes confirmées
+%table.table.table-striped
+  %thead
+    %tr
+      %th Projet
+      %th Consultant proposé
+      %th Date
+      %th Etat
+      %th Actions
+  %tbody
+    - @demandes_confirmees.each do |request|
+      %tr
+        %td= request.project.name
+        %td= request.proposal.name
         %td= request.date
         %td= request.etat
         %td
           = link_to "Consulter", request, :class => 'btn btn-mini'
-          = link_to "Modifier", edit_request_path(request), :class => 'btn btn-mini'
-          = link_to "Supprimer", request_path(request), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
-
+          =# link_to "Modifier", edit_request_path(request), :class => 'btn btn-mini'
+          =# link_to "Supprimer", request_path(request), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+%h2 Les demandes refusées
+%table.table.table-striped
+  %thead
+    %tr
+      %th Projet
+      %th Consultant proposé
+      %th Date
+      %th Etat
+      %th Actions
+  %tbody
+    - @demandes_refusees.each do |request|
+      %tr
+        %td= request.project.name
+        %td= request.proposal.name
+        %td= request.date
+        %td= request.etat
+        %td
+          = link_to "Consulter", request, :class => 'btn btn-mini'
+          =# link_to "Modifier", edit_request_path(request), :class => 'btn btn-mini'
+          =# link_to "Supprimer", request_path(request), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
 = link_to "Nouvelle Demande", new_request_path, :class => 'btn btn-primary'

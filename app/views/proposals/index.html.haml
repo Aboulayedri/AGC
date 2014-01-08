@@ -1,6 +1,9 @@
 - model_class = Proposal
 .page-header
-  %h1 Les Propositions
+  %h1 
+    Propositions
+    = Time.now.next_week.strftime("S%W %Y")
+%h2 Les propositions disponibles
 %table.table.table-striped
   %thead
     %tr
@@ -10,7 +13,7 @@
       %th Etat
       %th Actions
   %tbody
-    - @proposals.each do |proposal|
+    - @propositions_disponibles.each do |proposal|
       %tr
         %td= proposal.consultant.name
         %td= proposal.date
@@ -18,7 +21,51 @@
         %td= proposal.etat
         %td
           = link_to "Consulter", proposal, :class => 'btn btn-mini'
-          = link_to "Modifier", edit_proposal_path(proposal), :class => 'btn btn-mini'
-          = link_to "Supprimer", proposal_path(proposal), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+          = link_to "Reserver", reserver_proposal_path(proposal), :class => 'btn btn-mini'
+          = link_to "Annuler", annuler_proposal_path(proposal), :class => 'btn btn-mini'
+          =# link_to "Modifier", edit_proposal_path(proposal), :class => 'btn btn-mini'
+          =# link_to "Supprimer", proposal_path(proposal), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+%h2 Les propositions reservées
+%table.table.table-striped
+  %thead
+    %tr
+      %th Consultant
+      %th Date
+      %th Nombre de jours
+      %th Etat
+      %th Actions
+  %tbody
+    - @propositions_reservees.each do |proposal|
+      %tr
+        %td= proposal.consultant.name
+        %td= proposal.date
+        %td= proposal.nbre_jour
+        %td= proposal.etat
+        %td
+          = link_to "Consulter", proposal, :class => 'btn btn-mini'
+          = link_to "Liberer", liberer_proposal_path(proposal), :class => 'btn btn-mini'
+          = link_to "Annuler", annuler_proposal_path(proposal), :class => 'btn btn-mini'
+          =# link_to "Modifier", edit_proposal_path(proposal), :class => 'btn btn-mini'
+          =# link_to "Supprimer", proposal_path(proposal), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+%h2 Les propositions annulées
+%table.table.table-striped
+  %thead
+    %tr
+      %th Consultant
+      %th Date
+      %th Nombre de jours
+      %th Etat
+      %th Actions
+  %tbody
+    - @propositions_annulees.each do |proposal|
+      %tr
+        %td= proposal.consultant.name
+        %td= proposal.date
+        %td= proposal.nbre_jour
+        %td= proposal.etat
+        %td
+          = link_to "Consulter", proposal, :class => 'btn btn-mini'
+          =# link_to "Modifier", edit_proposal_path(proposal), :class => 'btn btn-mini'
+          =# link_to "Supprimer", proposal_path(proposal), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
 
-= link_to "Nouvelle Proposition", new_proposal_path, :class => 'btn btn-primary'
+= #link_to "Nouvelle Proposition", new_proposal_path, :class => 'btn btn-primary'

@@ -28,7 +28,7 @@ class ListsController < ApplicationController
 
     respond_to do |format|
       if @list.save
-        format.html { redirect_to @list, notice: 'List was successfully created.' }
+        format.html { redirect_to @list.entity, notice: 'La liste de propositions pour la semaine ' + @list.date.to_time.strftime("%W") + ' a été créée avec succès.' }
         format.json { render action: 'show', status: :created, location: @list }
       else
         format.html { render action: 'new' }
@@ -42,7 +42,7 @@ class ListsController < ApplicationController
   def update
     respond_to do |format|
       if @list.update(list_params)
-        format.html { redirect_to @list, notice: 'List was successfully updated.' }
+        format.html { redirect_to @list.entity, notice: 'La Liste de propositions pour la semaine ' + @list.date.to_time.strftime("%W") + ' a été modifiée avec succès.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -69,6 +69,6 @@ class ListsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def list_params
-      params.require(:list).permit(:entity_id, :date, proposals_attributes: [:consultant_id, :list_id, :nbre_jour, :date])
+      params.require(:list).permit(:entity_id, :date, proposals_attributes: [:id, :consultant_id, :nbre_jour, :date, :etat, :_destroy])
     end
 end

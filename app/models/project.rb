@@ -21,4 +21,6 @@ class Project < ActiveRecord::Base
   belongs_to :domain
   belongs_to :chef,   class_name: "Collaborator"
   belongs_to :maitrise_ouvrage, class_name: "Collaborator"
+  has_many   :proposals
+  #has_many   :requests
 end

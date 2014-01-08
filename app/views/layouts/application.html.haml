@@ -26,11 +26,11 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand(href="#") AGCDri
+          = link_to "AGCDri", root_path, class: "brand"
           .container.nav-collapse
             %ul.nav.pull-right
               %li= link_to "Accueil", root_path
-              %li= link_to "Aide", "/path2"
+              %li= link_to "Aide", aide_path
               %li= link_to "Se connecter", "/path3"
 
     .container-fluid
@@ -39,13 +39,13 @@
         .span3
           .well.sidebar-nav
             %ul.nav.nav-list
-              %li.nav-header Sidebar
+              %li.nav-header Les ressources
               %li= link_to "Entités", entities_path
               %li= link_to "Domaines", domains_path
               %li= link_to "Collaborateurs", collaborators_path
               %li= link_to "Projets", projects_path
               %li= link_to "Propositions", proposals_path
-              %li= link_to "Demandes", requests_path
+              %li= link_to "Affectations", affectations_path
         .span9
           = bootstrap_flash
           = yield

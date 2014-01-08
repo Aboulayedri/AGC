@@ -22,7 +22,7 @@
 class Collaborator < ActiveRecord::Base
   validates :prenom,    presence: { message: "Ne peut être vide" }
   validates :nom,       presence: { message: "Ne peut être vide" }
-  #validates :id_karma,  uniqueness: { message: "Déjà utilisé : un des collaborateurs enregistrés a ce numéro karma" }
+  validates :id_karma,  uniqueness: { message: "Déjà utilisé : un des collaborateurs enregistrés a ce numéro karma" }, allow_blank: true
   validates :role,      inclusion: { in: %w(consultant manager resp_domaine), message: "%{value} n'est pas un rôle valide" }
   validates :entity_id, presence: { message: "Ne peut être vide" }
 
@@ -35,6 +35,8 @@ class Collaborator < ActiveRecord::Base
   belongs_to :entity
   belongs_to :manager,     class_name: "Collaborator"
   has_many   :consultants, class_name: "Collaborator", foreign_key: "manager_id"
+  has_many   :proposals,   class_name: "Collaborator", foreign_key: "consultant_id"
+  #has_many   :requests, through: :proposals
 
   def name
     "#{nom} #{prenom}"

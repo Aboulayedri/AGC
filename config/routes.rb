@@ -1,11 +1,28 @@
 AGCDri::Application.routes.draw do
-  root "entities#index"
+  root "static_pages#home"
+  match "/aide",         to: "static_pages#help", via: "get"
+  match "/apropos",      to: "static_pages#about", via: "get"
+  match "/contact",      to: "static_pages#contact", via: "get"
+  match "/affectations", to: "proposals#gestion_affectations", via: "get"
 
   resources :lists
 
-  resources :requests
+  resources :requests do
+    member do
+      get :accepter
+      get :refuser
+      get :confirmer
+    end
+  end
 
-  resources :proposals
+  resources :proposals do
+    member do
+      get :reserver
+      get :arriver
+      get :liberer
+      get :valider
+    end
+  end
 
   resources :projects
 

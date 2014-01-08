@@ -10,6 +10,7 @@ class DomainsController < ApplicationController
   # GET /domains/1
   # GET /domains/1.json
   def show
+    @project = @domain.projects.new
   end
 
   # GET /domains/new

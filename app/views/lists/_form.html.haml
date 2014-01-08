@@ -1,6 +1,31 @@
-= simple_form_for @list, :html => { :class => 'form-horizontal' } do |f|
-  = f.input :entity_id
-  = f.input :date
+= simple_nested_form_for @list, :html => { :class => 'form-horizontal well' } do |f|
+  = f.association :entity, label: "Entité"
+  = f.input :date, label: "Semaine", hint: "Une date de la semaine de proposition", as: :string, input_html: {class: "datepicker"} 
+  %table#proposals.table.table-striped
+    = f.fields_for :proposals, wrapper: false do |proposal_form|
+      %tr.fields
+        %td= proposal_form.association :consultant, prompt: "Sélectionner le consultant", collection: Entity.find(@list.entity_id).collaborators.consultants.valides
+        %td= proposal_form.input :nbre_jour, label: false, placeholder: "Nombre de jours de disponibilité"
+        %td= proposal_form.input :date, as: :string, :input_html => {:class => 'datepicker'}, label: false, placeholder: "Date d'arrivée"
+        %td= proposal_form.input :etat, collection: ["disponible", "reservée", "annulée"]
+        %td= proposal_form.link_to_remove "Supprimer", :class => 'btn btn-danger'
+  %p= f.link_to_add "Ajouter une proposition", :proposals, data: { target: "#proposals" }, :class => 'btn btn-primary'
   .form-actions
-    = f.button :submit, :class => 'btn-primary'
-    = link_to t('.cancel', :default => t("helpers.links.cancel")), lists_path, :class => 'btn'
+    = f.button :submit, :class => 'btn btn-primary'
+    = link_to "Annuler", Entity.find(@list.entity_id), :class => 'btn'
+:javascript
+  $(".datepicker").datepicker({
+    dateFormat: "dd-mm-yy",
+    showWeek: true,
+    firstDay: 1,
+    showAnim: "slideDown"
+  }); ;
+  $(document).on('nested:fieldAdded', function(event){
+    $(".datepicker").datepicker({
+      dateFormat: "dd-mm-yy",
+      showWeek: true,
+      firstDay: 1,
+      showAnim: "slideDown"
+    });
+  }); ;
+

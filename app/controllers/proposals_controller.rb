@@ -1,15 +1,26 @@
 class ProposalsController < ApplicationController
-  before_action :set_proposal, only: [:show, :edit, :update, :destroy]
+  before_action :set_proposal, only: [:show, :edit, :update, :destroy, :reserver, :arriver, :liberer, :valider]
 
   # GET /proposals
   # GET /proposals.json
   def index
-    @proposals = Proposal.all
+    #@proposals = Proposal.where(date: Time.now.next_week.all_week)
+    @propositions_disponibles = Proposal.a_traiter.disponibles
+    @propositions_reservees = Proposal.a_traiter.reservees
+    @propositions_annulees = Proposal.a_traiter.arrivees
   end
+  
+  # GET /affectations
+  def gestion_affectations
+    @propositions_disponibles   = Proposal.a_traiter.disponibles
+    @propositions_reservees     = Proposal.a_traiter.reservees
+    @propositions_sortantes     = Proposal.a_traiter.arrivees
+  end  
 
   # GET /proposals/1
   # GET /proposals/1.json
   def show
+    #@request = @proposal.requests.new date: @proposal.date, etat: "en attente"
   end
 
   # GET /proposals/new
@@ -51,6 +62,59 @@ class ProposalsController < ApplicationController
     end
   end
 
+  # GET /proposals/1/reserver
+  def reserver
+    respond_to do |format|
+      if @proposal.reserver
+        format.html { redirect_to :back, notice: 'La proposition a été reservée.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to :back, notice: 'Impossible de reserver cette proposition.' }
+        format.json { render json: @proposal.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+  
+  # GET /proposals/1/valider
+  def valider
+    respond_to do |format|
+      if @proposal.valider
+        format.html { redirect_to :back, notice: 'La réservation du consultant a été validée.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to :back, notice: 'Impossible de valider la réservation du consultant.' }
+        format.json { render json: @proposal.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+   # GET /proposals/1/arriver
+  def arriver
+    respond_to do |format|
+      if @proposal.arriver
+        format.html { redirect_to :back, notice: 'La venue du consultant a été confirmée.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to :back, notice: 'Impossible de confirmer la venue du consultant.' }
+        format.json { render json: @proposal.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+   # GET /proposals/1/liberer
+  def liberer
+    respond_to do |format|
+      if @proposal.liberer
+        format.html { redirect_to :back, notice: 'Le consultant est de nouveau disponible.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to :back, notice: 'Impossible de rendre disponible le consultant.' }
+        format.json { render json: @proposal.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+
   # DELETE /proposals/1
   # DELETE /proposals/1.json
   def destroy
@@ -69,6 +133,6 @@ class ProposalsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def proposal_params
-      params.require(:proposal).permit(:consultant_id, :date, :nbre_jour, :etat)
+      params.require(:proposal).permit(:consultant_id, :date, :nbre_jour, :etat, :project_id)
     end
 end

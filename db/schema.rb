@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131212143253) do
+ActiveRecord::Schema.define(version: 20140107191028) do
 
   create_table "collaborators", force: true do |t|
     t.string   "prenom"
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 20131212143253) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "list_id"
+    t.integer  "project_id"
   end
 
   create_table "requests", force: true do |t|
@@ -80,6 +81,7 @@ ActiveRecord::Schema.define(version: 20131212143253) do
     t.string   "etat"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "proposal_id"
   end
 
 end

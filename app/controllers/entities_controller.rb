@@ -11,6 +11,7 @@ class EntitiesController < ApplicationController
   # GET /entities/1.json
   def show
     @list = @entity.lists.new
+    @collaborator = @entity.collaborators.new
   end
 
   # GET /entities/new

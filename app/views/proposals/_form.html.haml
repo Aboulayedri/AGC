@@ -1,8 +1,17 @@
 = simple_form_for @proposal, :html => { :class => 'form-horizontal' } do |f|
-  = f.association :consultant, collection: Collaborator.consultants, prompt: "Sélectionner le consultant"
-  = f.input :date
+  = f.association :list, as: :hidden
+  = f.association :consultant, collection: @proposal.consultant.entity.collaborators.consultants.valides, prompt: "Sélectionner le consultant"
+  = f.input :date, label: "Date d'arrivée", as: :string, input_html: {class: "datepicker"}
   = f.input :nbre_jour, label: "Nombre de jours"
-  = f.input :etat
+  = f.input :etat, collection: ["disponible", "reservée", "validée", "arrivée"]
+  = f.association :project
   .form-actions
     = f.button :submit, :class => 'btn-primary'
     = link_to "Annuler", proposals_path, :class => 'btn'
+:javascript
+  $(".datepicker").datepicker({
+    dateFormat: "dd-mm-yy",
+    showWeek: true,
+    firstDay: 1,
+    showAnim: "slideDown"
+  }); ;
