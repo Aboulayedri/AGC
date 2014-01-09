@@ -1,6 +1,6 @@
 .page-header
   %h1 
-    Propositions
+    Gestion des affectations
     = Time.now.next_week.strftime("S%W %Y")
 %h2 Les consultants disponibles
 %table.table.table-striped
@@ -18,7 +18,8 @@
         %td= proposal.consultant.entity.name
         %td
           =# link_to "Consulter", proposal, :class => 'btn btn-mini'
-          = link_to "Reserver", reserver_proposal_path(proposal), :class => 'btn btn-mini'
+          =# link_to "Reserver", reserver_proposal_path(proposal), :class => 'btn btn-mini'
+          = link_to "Reserver", "#proposition"+proposal.id.to_s, class: 'btn btn-mini', "data-toggle" => "modal"
 %h2 Les consultants reservés
 %table.table.table-striped
   %thead
@@ -81,5 +82,17 @@
       = proposal.consultant.entity.name
   = modal_dialog id: "modal"+proposal.consultant_id.to_s,
   header: { title: proposal.consultant.name },
+  body: dialog_body,
+  footer: content_tag(:button, 'Fermer', class: 'btn', "data-dismiss" => "modal")
+- @propositions_disponibles.each do |proposal|
+  - dialog_body = capture do
+    = simple_form_for proposal, :html => { class: 'form-horizontal' } do |f|
+      = f.input :etat, as: :hidden, input_html: { value: "reservée" }
+      = f.association :project, label: "Projet"
+      .form-actions
+        = f.button :submit, label: "Valider", class: 'btn-primary'
+        = #link_to "Annuler", proposals_path, :class => 'btn'
+  = modal_dialog id: "proposition"+proposal.id.to_s,
+  header: { title: "Réservation de : "+ proposal.consultant.name },
   body: dialog_body,
   footer: content_tag(:button, 'Fermer', class: 'btn', "data-dismiss" => "modal")
