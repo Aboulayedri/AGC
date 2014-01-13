@@ -60,6 +60,7 @@ gem 'nested_form'
 gem 'annotate'
 gem 'bcrypt-ruby', '3.1.2'
 gem 'faker', '1.1.2'
+gem 'jscrollpane-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

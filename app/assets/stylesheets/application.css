@@ -10,6 +10,7 @@
  *
  *= require bootstrap_and_overrides
  *= require jquery.ui.all
+ *= require jscrollpane
  *= require_self
  *= require_tree .
  */

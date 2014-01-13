@@ -2,57 +2,63 @@
   %h1 
     Gestion des affectations
     = Time.now.next_week.strftime("S%W %Y")
-%h2 Les consultants sortants
-%table.table.table-striped
-  %thead
-    %tr
-      %th Consultant
-      %th Dernier projet
-  %tbody
-    - @propositions_sortantes.each do |proposal|
+.table-responsive
+  %table.table.table-striped.table-condensed
+    %caption
+      %h4 Les consultans sortants
+    %thead
       %tr
-        %td= link_to proposal.consultant.name, "#modal"+proposal.consultant_id.to_s, "data-toggle" => 'modal'
-        %td= proposal.project.name
+        %th Consultant
+        %th Dernier projet
+    %tbody
+      - @propositions_sortantes.each do |proposal|
+        %tr
+          %td= link_to proposal.consultant.name, "#modal"+proposal.consultant_id.to_s, "data-toggle" => 'modal'
+          %td= proposal.project.name
 
-%h2 Les consultants disponibles
-%table.table.table-striped
-  %thead
-    %tr
-      %th Consultant
-      %th Nombre de jours
-      %th Entité
-      %th Actions
-  %tbody
-    - @propositions_disponibles.each do |proposal|
+.table-responsive
+  %table.table.table-striped.table-condensed
+    %caption
+      %h4 Les consultants disponibles
+    %thead
       %tr
-        %td= link_to proposal.consultant.name, "#modal"+proposal.consultant_id.to_s, "data-toggle" => 'modal'
-        %td= proposal.nbre_jour
-        %td= proposal.consultant.entity.name
-        %td
-          =# link_to "Consulter", proposal, :class => 'btn btn-mini'
-          =# link_to "Reserver", reserver_proposal_path(proposal), :class => 'btn btn-mini'
-          = link_to "Reserver", "#proposition"+proposal.id.to_s, class: 'btn btn-mini', "data-toggle" => "modal"
+        %th Consultant
+        %th Nombre de jours
+        %th Entité
+        %th Actions
+    %tbody
+      - @propositions_disponibles.each do |proposal|
+        %tr
+          %td= link_to proposal.consultant.name, "#modal"+proposal.consultant_id.to_s, "data-toggle" => 'modal'
+          %td= proposal.nbre_jour
+          %td= proposal.consultant.entity.name
+          %td
+            =# link_to "Consulter", proposal, :class => 'btn btn-mini'
+            =# link_to "Reserver", reserver_proposal_path(proposal), :class => 'btn btn-mini'
+            = link_to "Reserver", "#proposition"+proposal.id.to_s, class: 'btn btn-mini', "data-toggle" => "modal"
 
-%h2 Les consultants reservés
-%table.table.table-striped
-  %thead
-    %tr
-      %th Consultant
-      %th Projet
-      %th Nombre de jours
-      %th Entité
-      %th Actions
-  %tbody
-    - @propositions_reservees.each do |proposal|
+.table-responsive
+  %table.table.table-striped.table-condensed
+    %caption
+      %h4 Les consultants resérvés
+    %thead
       %tr
-        %td= link_to proposal.consultant.name, "#modal"+proposal.consultant_id.to_s, "data-toggle" => 'modal'
-        %td= proposal.project.name
-        %td= proposal.nbre_jour
-        %td= proposal.consultant.entity.name
-        %td
-          =# link_to "Consulter", proposal, :class => 'btn btn-mini'
-          = link_to "Liberer", liberer_proposal_path(proposal), :class => 'btn btn-mini'
-          = link_to "Valider", valider_proposal_path(proposal), :class => 'btn btn-mini'
+        %th Consultant
+        %th Projet
+        %th Nombre de jours
+        %th Entité
+        %th Actions
+    %tbody
+      - @propositions_reservees.each do |proposal|
+        %tr
+          %td= link_to proposal.consultant.name, "#modal"+proposal.consultant_id.to_s, "data-toggle" => 'modal'
+          %td= proposal.project.name
+          %td= proposal.nbre_jour
+          %td= proposal.consultant.entity.name
+          %td
+            =# link_to "Consulter", proposal, :class => 'btn btn-mini'
+            = link_to "Liberer", liberer_proposal_path(proposal), :class => 'btn btn-mini'
+            = link_to "Valider", valider_proposal_path(proposal), :class => 'btn btn-mini'
 
 - @propositions_sortantes.each do |proposal|
   - dialog_body = capture do
@@ -114,3 +120,10 @@
   header: { title: "Réservation de : "+ proposal.consultant.name },
   body: dialog_body,
   footer: content_tag(:button, 'Fermer', class: 'btn', "data-dismiss" => "modal")
+  :javascript
+    $(document).ready(function(){
+      $('.sortants').jScrollPane();
+      $('.disponilbes').jScrollPane();
+      $('.reserves').jScrollPane();
+    }); ;
+

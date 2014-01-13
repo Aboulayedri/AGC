@@ -16,4 +16,5 @@
 //= require turbolinks
 //= require jquery_nested_form
 //= require jquery.ui.all
+//= require jquery.jscrollpane
 //= require_tree .

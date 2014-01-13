@@ -19,6 +19,7 @@ class Proposal < ActiveRecord::Base
 
   scope :disponibles, -> { where etat: "disponible" }
   scope :reservees,   -> { where etat: "reservée" }
+  scope :validees,    -> { where etat: "validée" }
   scope :arrivees,    -> { where etat: "arrivée" }
   scope :a_traiter,   -> { where date: Time.now.next_week.all_week }
 

@@ -1,9 +1,10 @@
 AGCDri::Application.routes.draw do
   root "static_pages#home"
-  match "/aide",         to: "static_pages#help", via: "get"
-  match "/apropos",      to: "static_pages#about", via: "get"
-  match "/contact",      to: "static_pages#contact", via: "get"
-  match "/affectations", to: "proposals#gestion_affectations", via: "get"
+  match "/aide",          to: "static_pages#help", via: "get"
+  match "/apropos",       to: "static_pages#about", via: "get"
+  match "/contact",       to: "static_pages#contact", via: "get"
+  match "/affectations",  to: "proposals#gestion_affectations", via: "get"
+  match "/confirmations", to: "proposals#confirmation_affectations", via: "get"
 
   resources :lists
 

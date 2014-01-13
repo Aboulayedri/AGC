@@ -21,6 +21,12 @@ class ProposalsController < ApplicationController
       @propositions_sortantes << proposition unless Proposal.where(consultant_id: proposition.consultant_id, date: Time.now.next_week.all_week).any?
     end
   end  
+  
+  # GET /confirmations
+  def confirmation_affectations
+    @propositions_validees = Proposal.a_traiter.validees
+    @propositions_arrivees = Proposal.a_traiter.arrivees
+  end
 
   # GET /proposals/1
   # GET /proposals/1.json
