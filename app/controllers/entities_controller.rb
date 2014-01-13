@@ -30,7 +30,7 @@ class EntitiesController < ApplicationController
 
     respond_to do |format|
       if @entity.save
-        format.html { redirect_to @entity, notice: 'L\'Entité #{@entity.name} a été créée avec succès.' }
+        format.html { redirect_to @entity, notice: "L\'Entité #{@entity.name} a été créée avec succès." }
         format.json { render action: 'show', status: :created, location: @entity }
       else
         format.html { render action: 'new' }
