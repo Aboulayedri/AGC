@@ -11,6 +11,7 @@
 #  updated_at    :datetime
 #  list_id       :integer
 #  project_id    :integer
+#  entity_id     :integer
 #
 
 class Proposal < ActiveRecord::Base
@@ -26,6 +27,7 @@ class Proposal < ActiveRecord::Base
   belongs_to :consultant, class_name: "Collaborator"
   belongs_to :list
   belongs_to :project
+  belongs_to :entity
   #has_many   :requests
   
   after_save   :set_date,   if: :empty_date?

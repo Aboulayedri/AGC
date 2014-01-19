@@ -16,5 +16,5 @@ class Entity < ActiveRecord::Base
   belongs_to :manager, class_name: "Collaborator"
   has_many   :collaborators
   has_many   :lists
-  has_many   :proposals, through: :lists
+  has_many   :proposals
 end

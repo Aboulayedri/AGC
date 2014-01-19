@@ -5,9 +5,8 @@ class ProposalsController < ApplicationController
   # GET /proposals.json
   def index
     #@proposals = Proposal.where(date: Time.now.next_week.all_week)
-    @propositions_disponibles = Proposal.a_traiter.disponibles
-    @propositions_reservees = Proposal.a_traiter.reservees
-    @propositions_annulees = Proposal.a_traiter.arrivees
+    @propositions = Proposal.a_traiter
+    @entites      = Entity.all
   end
   
   # GET /affectations
@@ -50,7 +49,7 @@ class ProposalsController < ApplicationController
 
     respond_to do |format|
       if @proposal.save
-        format.html { redirect_to @proposal, notice: 'Proposal was successfully created.' }
+        format.html { redirect_to :back, notice: 'Proposal was successfully created.' }
         format.json { render action: 'show', status: :created, location: @proposal }
       else
         format.html { render action: 'new' }
@@ -144,6 +143,6 @@ class ProposalsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def proposal_params
-      params.require(:proposal).permit(:consultant_id, :date, :nbre_jour, :etat, :project_id)
+      params.require(:proposal).permit(:consultant_id, :date, :nbre_jour, :etat, :project_id, :entity_id)
     end
 end

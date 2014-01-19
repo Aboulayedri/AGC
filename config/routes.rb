@@ -31,7 +31,11 @@ AGCDri::Application.routes.draw do
 
   resources :domains
 
-  resources :entities
+  resources :entities do
+    member do
+      get :creer_propositions
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,5 +1,6 @@
 = simple_form_for @proposal, :html => { :class => 'form-horizontal' } do |f|
-  = f.association :list, as: :hidden
+  =# f.association :list, as: :hidden
+  = f.association :entity
   = f.association :consultant, collection: @proposal.consultant.entity.collaborators.consultants.valides, prompt: "Sélectionner le consultant"
   = f.input :date, label: "Date d'arrivée", as: :string, input_html: {class: "datepicker"}
   = f.input :nbre_jour, label: "Nombre de jours"

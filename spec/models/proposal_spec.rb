@@ -11,6 +11,7 @@
 #  updated_at    :datetime
 #  list_id       :integer
 #  project_id    :integer
+#  entity_id     :integer
 #
 
 require 'spec_helper'

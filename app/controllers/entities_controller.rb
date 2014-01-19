@@ -1,10 +1,23 @@
 class EntitiesController < ApplicationController
-  before_action :set_entity, only: [:show, :edit, :update, :destroy]
+  before_action :set_entity, only: [:show, :edit, :update, :destroy, :creer_propositions]
 
   # GET /entities
   # GET /entities.json
   def index
     @entities = Entity.all
+  end
+
+  # GET /entities/1/creer_propositions
+  # GET /entities/1/creer_propositions.json
+  def creer_propositions
+    @propositions = Proposal.where(entity_id: @entity.id, date: Time.now.next_week.all_week)
+    #@consultants  = Collaborator.where(entity_id: @entity.id, role: "consultant", Proposal.where(conultant_id: id, date: Time.now.next_week.all_week).empty?)
+    
+    @consultants_a_proposer = []
+    consultants             = Collaborator.where(entity_id: @entity.id, role: "consultant")
+    consultants.each do |consultant|
+      @consultants_a_proposer << consultant unless Proposal.where(consultant_id: consultant.id, date: Time.now.next_week.all_week).any?
+    end
   end
 
   # GET /entities/1
