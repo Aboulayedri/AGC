@@ -28,7 +28,7 @@ class CollaboratorsController < ApplicationController
 
     respond_to do |format|
       if @collaborator.save
-        format.html { redirect_to @collaborator.entity, notice: "Le Collaborateur #{@collaborator.name} a été créé avec succès." }
+        format.html { redirect_to :back, notice: "Le Collaborateur #{@collaborator.name} a été créé avec succès." }
         format.json { render action: 'show', status: :created, location: @collaborator }
       else
         format.html { render action: 'new' }

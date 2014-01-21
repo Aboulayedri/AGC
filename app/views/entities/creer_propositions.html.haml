@@ -34,6 +34,31 @@
           %td= f.input       :nbre_jour,  label: false, placeholder: "Nombre de jours"
           %td= f.submit "Proposer", class: 'btn'
 
+= link_to "Créer un Collaborateur", "#collaborateur", class: 'btn btn-info', "data-toggle" => "modal"
+
+- dialog_body = capture do
+  = simple_form_for @entity.collaborators.new, :html => { class: 'form-horizontal' } do |f|
+    = f.input :nom
+    = f.input :prenom, label: "Prénom"
+    = f.input :id_karma
+    = f.input :profil
+    = f.input :role, label: "Rôle", collection: ["consultant", "manager", "resp_domaine"], prompt: "Sélectionner le rôle du collaborateur"
+    = f.input :email, placeholder: "prénom.nom@devoteam.com"
+    = f.input :eligibilite, collection: ["éligible", "non-éligible"]
+    = f.input :etat, collection: ["non-validé", "validé"], prompt: "Sélectionner la validité du collaborateur"
+    = f.input :statut
+    = f.input :niv_diplome, collection: [">= Bac + 3", "Bac + 2", "Autres"]
+    = f.input :nat_diplome, collection: ["Autre", "Scientifique"]
+    = f.association :entity, as: :hidden
+    = f.association :manager, collection: @entity.collaborators.managers, prompt: "Sélectionner le manager du consultant"
+    = f.input :commentaire
+    .form-actions
+      = f.submit "Créer Collaborateur", class: 'btn btn-primary'
+= modal_dialog id: "collaborateur",
+header: { title: "Nouveau Collaborateur" },
+body: dialog_body,
+footer: content_tag(:button, 'Annuler', class: 'btn', "data-dismiss" => "modal")
+
 :javascript
   $(".datepicker").datepicker({
     dateFormat: "dd-mm-yy",
