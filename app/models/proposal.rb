@@ -15,8 +15,10 @@
 #
 
 class Proposal < ActiveRecord::Base
-  validates :consultant_id,    presence: { message: "Ne peut être vide" }
-  validates :date,             presence: { message: "Ne peut être vide" }
+  validates :consultant_id, presence: { message: "Ne peut être vide" }
+  validates :entity_id,     presence: { message: "Ne peut être vide" }
+  validates :etat,          presence: { message: "Ne peut être vide" }
+  validates :date,          presence: { message: "Ne peut être vide" }
 
   scope :disponibles, -> { where etat: "disponible" }
   scope :reservees,   -> { where etat: "reservée" }
@@ -30,7 +32,7 @@ class Proposal < ActiveRecord::Base
   belongs_to :entity
   #has_many   :requests
   
-  after_save   :set_date,   if: :empty_date?
+  #after_save   :set_date,   if: :empty_date?
   after_create :reconduire, if: :present?
 
   def name

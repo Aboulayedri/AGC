@@ -1,6 +1,7 @@
 .page-header
   %h1 
-    Propositions
+    Propositions de l'entité
+    = @entity.name
     = Time.now.next_week.strftime("S%W %Y")
 
 %table.table.table-striped
@@ -11,14 +12,12 @@
       %th Consultant
       %th Date
       %th Nombre de jours
-      %th Etat
   %tbody
     - @propositions.each do |proposal|
       %tr
         %td= proposal.consultant.name
         %td= proposal.date
         %td= proposal.nbre_jour
-        %td= proposal.etat
 
 %table.table.table-striped
   %caption
@@ -33,7 +32,7 @@
           %td= f.input       :etat,       as: :hidden,  input_html: {value: "disponible"}
           %td= f.input       :date,       label: false, input_html: {class: 'datepicker', value: Time.now.to_date.next_week}, placeholder: "Date d'arrivée", as: :string
           %td= f.input       :nbre_jour,  label: false, placeholder: "Nombre de jours"
-          %td= f.button :submit, class: 'btn-primary'
+          %td= f.submit "Proposer", class: 'btn'
 
 :javascript
   $(".datepicker").datepicker({

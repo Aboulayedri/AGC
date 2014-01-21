@@ -40,11 +40,11 @@
           .well.sidebar-nav
             %ul.nav.nav-list
               %li.nav-header Les actions
+              %li= link_to "Gérer les propositions", proposals_path
               %li= link_to "Gérer les entités", entities_path
               %li= link_to "Gérer les domaines", domains_path
               %li= link_to "Gérer les collaborateurs", collaborators_path
               %li= link_to "Gérer les projets", projects_path
-              %li= link_to "Propositions", proposals_path
               %li= link_to "Gérer les affectations", affectations_path 
               %li= link_to "Confirmer les arrivées", confirmations_path
         .span9

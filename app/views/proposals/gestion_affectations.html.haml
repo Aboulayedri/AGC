@@ -44,19 +44,16 @@
     %thead
       %tr
         %th Consultant
+        %th Profil
         %th Projet
-        %th Nombre de jours
-        %th Entité
         %th Actions
     %tbody
       - @propositions_reservees.each do |proposal|
         %tr
           %td= link_to proposal.consultant.name, "#modal"+proposal.consultant_id.to_s, "data-toggle" => 'modal'
+          %td=# proposal.profil
           %td= proposal.project.name
-          %td= proposal.nbre_jour
-          %td= proposal.consultant.entity.name
           %td
-            =# link_to "Consulter", proposal, :class => 'btn btn-mini'
             = link_to "Liberer", liberer_proposal_path(proposal), :class => 'btn btn-mini'
             = link_to "Valider", valider_proposal_path(proposal), :class => 'btn btn-mini'
 
@@ -114,8 +111,7 @@
       = f.input :etat, as: :hidden, input_html: { value: "reservée" }
       = f.association :project, label: "Projet"
       .form-actions
-        = f.button :submit, label: "Valider", class: 'btn-primary'
-        = #link_to "Annuler", proposals_path, :class => 'btn'
+        = f.submit "Créer Réservation", class: 'btn-primary'
   = modal_dialog id: "proposition"+proposal.id.to_s,
   header: { title: "Réservation de : "+ proposal.consultant.name },
   body: dialog_body,

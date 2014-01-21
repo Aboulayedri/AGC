@@ -4,51 +4,45 @@
 
 %p
   %strong Prénom :
-  %br
   = @collaborator.prenom
 %p
   %strong Nom :
-  %br
   = @collaborator.nom
 %p
   %strong ID Karma :
-  %br
   = @collaborator.id_karma
 %p
+  %strong Profil :
+  = @collaborator.profil
+%p
   %strong Rôle :
-  %br
   = @collaborator.role
 %p
   %strong Email :
-  %br
   = @collaborator.email
 %p
+  %strong Eligibilité :
+  = @collaborator.eligibilite
+%p
   %strong Etat :
-  %br
   = @collaborator.etat
 %p
   %strong Statut :
-  %br
   = @collaborator.statut
 %p
   %strong Niveau de diplôme :
-  %br
   = @collaborator.niv_diplome
 %p
   %strong Nature du diplôme :
-  %br
   = @collaborator.nat_diplome
 %p
   %strong Entité :
-  %br
   = @collaborator.entity.name
 %p
-  %strong Manager
-  %br
+  %strong Manager :
   = @collaborator.manager.try(:name)
 %p
   %strong Commentaire :
-  %br
   = @collaborator.commentaire
 
 .form-actions

@@ -49,7 +49,7 @@ class ProposalsController < ApplicationController
 
     respond_to do |format|
       if @proposal.save
-        format.html { redirect_to :back, notice: 'Proposal was successfully created.' }
+        format.html { redirect_to :back, notice: 'La proposition a été créée avec succès.' }
         format.json { render action: 'show', status: :created, location: @proposal }
       else
         format.html { render action: 'new' }

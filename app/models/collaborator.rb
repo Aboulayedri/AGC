@@ -17,6 +17,8 @@
 #  commentaire :text
 #  created_at  :datetime
 #  updated_at  :datetime
+#  profil      :string(255)
+#  eligibilite :string(255)
 #
 
 class Collaborator < ActiveRecord::Base

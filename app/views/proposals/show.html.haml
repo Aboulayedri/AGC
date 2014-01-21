@@ -4,29 +4,24 @@
 
 %p
   %strong Consultant proposé :
-  %br
   = @proposal.consultant.name
 %p
   %strong Date de proposition :
-  %br
   = @proposal.date
 %p
   %strong Nombre de jours de présence :
-  %br
   = @proposal.nbre_jour
 %p
-  %strong Etat de la proposition
-  %br
+  %strong Etat de la proposition :
   = @proposal.etat
 %p
-  %strong Projet d'affectation
-  %br
+  %strong Projet d'affectation :
   = @proposal.project.try(:name)
 .form-actions
   = link_to "Retour aux Propositions", proposals_path, :class => 'btn'
   = link_to "Modifier", edit_proposal_path(@proposal), :class => 'btn'
   = link_to "Supprimer", proposal_path(@proposal), :method => "delete", :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-danger'
-  = link_to "Demander", "#", class: "btn btn-primary", id: "nouv_demande"
+  =# link_to "Demander", "#", class: "btn btn-primary", id: "nouv_demande"
 :javascript
   $(".datepicker").datepicker({
     dateFormat: "dd-mm-yy",

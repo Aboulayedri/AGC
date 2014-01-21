@@ -4,15 +4,12 @@
 
 %p
   %strong Nom :
-  %br
   = @entity.name
 %p
   %strong Manager :
-  %br
   = @entity.manager.try(:name)
 %p
   %strong Description
-  %br
   = @entity.description
 
 .form-actions
@@ -20,14 +17,16 @@
   = link_to "Modifier", edit_entity_path(@entity), :class => 'btn'
   = link_to "Supprimer", entity_path(@entity), :method => "delete", :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-danger'
   = link_to "Nouveau Collaborateur","#", class: "btn btn-primary", id: "nouv_collaborateur"
-  = link_to "Proposer des consultants","#", class: "btn btn-primary", id: "nouv_propositions"
+  =# link_to "Proposer des consultants","#", class: "btn btn-primary", id: "nouv_propositions"
 
 = simple_form_for @collaborator, :html => { :class => 'form-horizontal well' } do |f|
   = f.input :nom
   = f.input :prenom, label: "Prénom"
   = f.input :id_karma
+  = f.input :profil
   = f.input :role, label: "Rôle", collection: ["consultant", "manager", "resp_domaine"], prompt: "Sélectionner le rôle du collaborateur"
   = f.input :email, placeholder: "prénom.nom@devoteam.com"
+  = f.input :eligibilite, collection: ["éligible", "non-éligible"]
   = f.input :etat, collection: ["non-validé", "validé"], prompt: "Sélectionner la validité du collaborateur"
   = f.input :statut
   = f.input :niv_diplome, collection: [">= Bac + 3", "Bac + 2", "Autres"]
@@ -39,48 +38,26 @@
     = f.button :submit, :class => 'btn-primary'
     = link_to "Annuler", "#", :class => 'btn', id: "annuler_collaborateur"
 
-= simple_nested_form_for @list, html: { class: 'form-horizontal well' } do |f|
-  = f.input :date, as: :hidden, input_html: { value: Time.now.to_date.next_week}
-  = f.association :entity, as: :hidden
-  %table#proposals.table.table-striped
-    = f.fields_for :proposals, wrapper: false do |proposal_form|
-      %tr.fields
-        %td= proposal_form.input :etat, as: :hidden, input_html: { value: "disponible" }
-        %td
-          = proposal_form.association :consultant, prompt: "Sélectionner le consultant", collection: @entity.collaborators.consultants.valides
-          = proposal_form.input :nbre_jour, label: false, placeholder: "Nombre de jours de disponibilité"
-          = proposal_form.input :date, as: :string, input_html: {class: 'datepicker', value: Time.now.to_date.next_week}, label: false, placeholder: "Date d'arrivée"
-          = proposal_form.link_to_remove "Supprimer", class: 'btn btn-danger'
-  %p= f.link_to_add "Ajouter une proposition", :proposals, data: { target: "#proposals" }, class: 'btn btn-primary'
-  .form-actions
-    = f.button :submit, class: 'btn btn-primary'
-    = link_to "Annuler", "#", class: 'btn', id: "annuler_propositions"
-
-%h2 Listes des propositions
-- @entity.lists.each do |list|
-  %h3
-    = list.date
-    = link_to "Modifier", edit_list_path(list), class: 'btn btn-mini'
-    = link_to "Supprimer", list, :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
-  %table.table.table-striped.propositions
-    %thead
+%h2 Propositions encours
+%table.table.table-striped
+  %thead
+    %tr
+      %th Consultant
+      %th Date d'arrivée
+      %th Nombre de jours
+      %th Etat
+      %th Actions
+  %tbody
+    - @propositions.each do |proposal|
       %tr
-        %th Consultant
-        %th Date d'arrivée
-        %th Nombre de jours
-        %th Etat
-        %th Actions
-    %tbody
-      - list.proposals.each do |proposal|
-        %tr
-          %td= proposal.consultant.name
-          %td= proposal.date
-          %td= proposal.nbre_jour
-          %td= proposal.etat
-          %td
-            = link_to "Consulter", proposal, :class => 'btn btn-mini'
-            = link_to "Modifier", edit_proposal_path(proposal), :class => 'btn btn-mini'
-            = link_to "Supprimer", proposal_path(proposal), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+        %td= proposal.consultant.name
+        %td= proposal.date
+        %td= proposal.nbre_jour
+        %td= proposal.etat
+        %td
+          = link_to "Consulter", proposal, :class => 'btn btn-mini'
+          = link_to "Modifier", edit_proposal_path(proposal), :class => 'btn btn-mini'
+          = link_to "Supprimer", proposal_path(proposal), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
 
 %h2 Liste des Collaborateurs
 %table.table.table-striped
@@ -92,7 +69,7 @@
       %th Etat
       %th Actions
   %tbody
-    - @entity.collaborators.each do |collaborator|
+    - @collaborateurs.each do |collaborator|
       %tr.collaborateur
         %td= collaborator.prenom
         %td= collaborator.nom
@@ -137,7 +114,5 @@
       $('#new_collaborator').slideUp("slow");
     });
     
-    $("h3:last").hide();
-    $(".propositions:last").hide();
     $(".collaborateur:last").hide();
   });
