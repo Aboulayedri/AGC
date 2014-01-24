@@ -16,7 +16,7 @@
   =# link_to "Retour aux Entités", entities_path, :class => 'btn'
   = link_to "Modifier", edit_entity_path(@entity), :class => 'btn'
   = link_to "Supprimer", entity_path(@entity), :method => "delete", :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-danger'
-  = link_to "Nouveau Collaborateur","#", class: "btn btn-primary", id: "nouv_collaborateur"
+  =# link_to "Nouveau Collaborateur","#", class: "btn btn-primary", id: "nouv_collaborateur"
   =# link_to "Proposer des consultants","#", class: "btn btn-primary", id: "nouv_propositions"
 
 = simple_form_for @collaborator, :html => { :class => 'form-horizontal well' } do |f|

@@ -23,6 +23,9 @@ AGCDri::Application.routes.draw do
       get :liberer
       get :valider
     end
+    collection do
+      get :publier
+    end
   end
 
   resources :projects

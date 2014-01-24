@@ -58,6 +58,26 @@ class ProposalsController < ApplicationController
     end
   end
 
+  # Publication des propostions après la validation des profils des consultants
+  # GET /proposals/publier
+  def publier
+    @profils_non_valides     = []
+    propositions_encours = Proposal.a_traiter
+    propositions_encours.each do |proposition|
+      @profils_non_valides << proposition.consultant unless proposition.consultant.profil_valide?
+    end
+    
+   if @profils_non_valides.empty?
+     propositions_encours.each do |proposition|
+       proposition.publier
+       proposition.reconduire unless !proposition.present?
+     end
+     redirect_to :back, notice: "Les propositions ont été publiées"
+   else
+     redirect_to :back, alert: "La publication n'est pas permise car il y a des profils non-validés"
+   end
+  end  
+
   # PATCH/PUT /proposals/1
   # PATCH/PUT /proposals/1.json
   def update
@@ -75,7 +95,7 @@ class ProposalsController < ApplicationController
   # GET /proposals/1/reserver
   def reserver
     respond_to do |format|
-      if @proposal.reserver
+      if @proposal.update(proposal_params)
         format.html { redirect_to :back, notice: 'La proposition a été reservée.' }
         format.json { head :no_content }
       else

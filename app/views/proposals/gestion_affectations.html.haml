@@ -23,19 +23,19 @@
     %thead
       %tr
         %th Consultant
-        %th Nombre de jours
+        %th Nb jours
         %th Entité
         %th Actions
     %tbody
       - @propositions_disponibles.each do |proposal|
         %tr
-          %td= link_to proposal.consultant.name, "#modal"+proposal.consultant_id.to_s, "data-toggle" => 'modal'
+          %td= link_to proposal.consultant.name, "#modal"+proposal.consultant_id.to_s, data: {toggle: "modal"}
           %td= proposal.nbre_jour
           %td= proposal.consultant.entity.name
           %td
             =# link_to "Consulter", proposal, :class => 'btn btn-mini'
             =# link_to "Reserver", reserver_proposal_path(proposal), :class => 'btn btn-mini'
-            = link_to "Reserver", "#proposition"+proposal.id.to_s, class: 'btn btn-mini', "data-toggle" => "modal"
+            = link_to "Reserver", "#proposition"+proposal.id.to_s, class: 'btn btn-mini', data: {toggle: "modal"}
 
 .table-responsive
   %table.table.table-striped.table-condensed
@@ -111,15 +111,15 @@
       = f.input :etat, as: :hidden, input_html: { value: "reservée" }
       = f.association :project, label: "Projet"
       .form-actions
-        = f.submit "Créer Réservation", class: 'btn-primary'
+        = f.submit "Créer Réservation", class: 'btn btn-primary'
   = modal_dialog id: "proposition"+proposal.id.to_s,
   header: { title: "Réservation de : "+ proposal.consultant.name },
   body: dialog_body,
   footer: content_tag(:button, 'Fermer', class: 'btn', "data-dismiss" => "modal")
-  :javascript
-    $(document).ready(function(){
-      $('.sortants').jScrollPane();
-      $('.disponilbes').jScrollPane();
-      $('.reserves').jScrollPane();
-    }); ;
+:javascript
+  $(document).ready(function(){
+    $('.sortants').jScrollPane();
+    $('.disponilbes').jScrollPane();
+    $('.reserves').jScrollPane();
+  }); ;
 

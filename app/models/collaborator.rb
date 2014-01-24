@@ -43,4 +43,8 @@ class Collaborator < ActiveRecord::Base
   def name
     "#{nom} #{prenom}"
   end
+
+  def profil_valide?
+   !self.eligibilite.empty?
+  end
 end

@@ -9,7 +9,7 @@
     %tr
       %th Consultant
       %th Date
-      %th Nombre de jours
+      %th Nb jours
       %th Etat
       %th Actions
   %tbody
@@ -29,3 +29,4 @@
   %ul.dropdown-menu
     - @entites.each do |entite|
       %li= link_to entite.name, creer_propositions_entity_path(entite)
+= link_to "Publier Propositions", publier_proposals_path, class: "btn btn-info"

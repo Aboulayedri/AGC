@@ -33,14 +33,14 @@ class Proposal < ActiveRecord::Base
   #has_many   :requests
   
   #after_save   :set_date,   if: :empty_date?
-  after_create :reconduire, if: :present?
+  #after_create :reconduire, if: :present?
 
   def name
     consultant.name
   end
 
-  def reserver
-    self.etat = "reservée"
+  def publier
+    self.etat = "disponible"
     self.save
   end
 
@@ -60,7 +60,7 @@ class Proposal < ActiveRecord::Base
     self.save
   end
 
-  protected
+  #protected
   def set_date
     self.date = self.list.date
     self.save

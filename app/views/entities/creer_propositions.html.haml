@@ -29,7 +29,7 @@
           %td= consultant.name
           %td= f.association :entity,     as: :hidden,  input_html: {value: consultant.entity_id}
           %td= f.association :consultant, as: :hidden,  input_html: {value: consultant.id}
-          %td= f.input       :etat,       as: :hidden,  input_html: {value: "disponible"}
+          %td= f.input       :etat,       as: :hidden,  input_html: {value: "créée"}
           %td= f.input       :date,       label: false, input_html: {class: 'datepicker', value: Time.now.to_date.next_week}, placeholder: "Date d'arrivée", as: :string
           %td= f.input       :nbre_jour,  label: false, placeholder: "Nombre de jours"
           %td= f.submit "Proposer", class: 'btn'
