@@ -11,8 +11,19 @@ class ProposalsController < ApplicationController
   
   # GET /affectations
   def gestion_affectations
-    @propositions_disponibles   = Proposal.a_traiter.disponibles
+    #@propositions_disponibles   = Proposal.a_traiter.disponibles
     @propositions_reservees     = Proposal.a_traiter.reservees
+
+    @propositions_disponibles       = []
+    @propositions_non_eligibles     = []
+    propositions = Proposal.where(etat: "disponible", date: Time.now.next_week.all_week)
+    propositions.each do |proposition|
+      if proposition.consultant.eligibilite == "éligible"
+        @propositions_disponibles << proposition
+      else
+        @propositions_non_eligibles << proposition
+      end
+    end
 
     @propositions_sortantes     = []
     propositions_presentes = Proposal.where(etat: "arrivée", date: Time.now.all_week)
@@ -83,7 +94,7 @@ class ProposalsController < ApplicationController
   def update
     respond_to do |format|
       if @proposal.update(proposal_params)
-        format.html { redirect_to @proposal, notice: 'La proposition a été modifiée.' }
+        format.html { redirect_to :back, notice: 'La proposition a été modifiée.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

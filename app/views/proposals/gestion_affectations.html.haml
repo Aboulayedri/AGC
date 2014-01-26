@@ -23,19 +23,48 @@
     %thead
       %tr
         %th Consultant
-        %th Nb jours
         %th Entité
+        %th Profil
+        %th Nb jours
+        %th Projet
         %th Actions
     %tbody
       - @propositions_disponibles.each do |proposal|
-        %tr
-          %td= link_to proposal.consultant.name, "#modal"+proposal.consultant_id.to_s, data: {toggle: "modal"}
-          %td= proposal.nbre_jour
-          %td= proposal.consultant.entity.name
-          %td
-            =# link_to "Consulter", proposal, :class => 'btn btn-mini'
-            =# link_to "Reserver", reserver_proposal_path(proposal), :class => 'btn btn-mini'
-            = link_to "Reserver", "#proposition"+proposal.id.to_s, class: 'btn btn-mini', data: {toggle: "modal"}
+        = simple_form_for proposal, html: { class: 'form-horizontal' } do |f|
+          %tr
+            = f.input :etat, as: :hidden, input_html: { value: "reservée" }
+            %td= link_to proposal.consultant.name, "#modal"+proposal.consultant_id.to_s, data: {toggle: "modal"}
+            %td= proposal.consultant.entity.name
+            %td= proposal.consultant.profil
+            %td= proposal.nbre_jour
+            %td= f.association :project, label: false
+            %td
+              =# link_to "Reserver", "#proposition"+proposal.id.to_s, class: 'btn btn-mini', data: {toggle: "modal"}
+              = f.submit "Réserver", class: "btn"
+
+.table-responsive
+  %table.table.table-striped.table-condensed
+    %caption
+      %h4 Les consultants non-éligibles
+    %thead
+      %tr
+        %th Consultant
+        %th Entité
+        %th Profil
+        %th Nb jours
+        %th Projet
+        %th Actions
+    %tbody
+      - @propositions_non_eligibles.each do |proposal|
+        = simple_form_for proposal, html: { class: 'form-horizontal' } do |f|
+          %tr
+            = f.input :etat, as: :hidden, input_html: { value: "reservée" }
+            %td= link_to proposal.consultant.name, "#modal"+proposal.consultant_id.to_s, data: {toggle: "modal"}
+            %td= proposal.consultant.entity.name
+            %td= proposal.consultant.profil
+            %td= proposal.nbre_jour
+            %td= f.association :project, label: false
+            %td= f.submit "Réserver", class: "btn"
 
 .table-responsive
   %table.table.table-striped.table-condensed
@@ -51,7 +80,7 @@
       - @propositions_reservees.each do |proposal|
         %tr
           %td= link_to proposal.consultant.name, "#modal"+proposal.consultant_id.to_s, "data-toggle" => 'modal'
-          %td=# proposal.profil
+          %td= proposal.consultant.profil
           %td= proposal.project.name
           %td
             = link_to "Liberer", liberer_proposal_path(proposal), :class => 'btn btn-mini'
@@ -59,6 +88,12 @@
 
 - @propositions_sortantes.each do |proposal|
   - dialog_body = capture do
+    %p
+      %strong Profil :
+      = proposal.consultant.profil
+    %p
+      %strong Eligibilité :
+      = proposal.consultant.eligibilite
     %p
       %strong Niveau de diplôme :
       = proposal.consultant.niv_diplome
@@ -76,6 +111,34 @@
 - @propositions_disponibles.each do |proposal|
   - dialog_body = capture do
     %p
+      %strong Profil :
+      = proposal.consultant.profil
+    %p
+      %strong Eligibilité :
+      = proposal.consultant.eligibilite
+    %p
+      %strong Niveau de diplôme :
+      = proposal.consultant.niv_diplome
+    %p
+      %strong Nature du diplôme :
+      = proposal.consultant.nat_diplome
+    %p
+      %strong Entité :
+      = proposal.consultant.entity.name
+  = modal_dialog id: "modal"+proposal.consultant_id.to_s,
+  header: { title: proposal.consultant.name },
+  body: dialog_body,
+  footer: content_tag(:button, 'Fermer', class: 'btn', "data-dismiss" => "modal")
+
+- @propositions_non_eligibles.each do |proposal|
+  - dialog_body = capture do
+    %p
+      %strong Profil :
+      = proposal.consultant.profil
+    %p
+      %strong Eligibilité :
+      = proposal.consultant.eligibilite
+    %p
       %strong Niveau de diplôme :
       = proposal.consultant.niv_diplome
     %p
@@ -91,6 +154,12 @@
 
 - @propositions_reservees.each do |proposal|
   - dialog_body = capture do
+    %p
+      %strong Profil :
+      = proposal.consultant.profil
+    %p
+      %strong Eligibilité :
+      = proposal.consultant.eligibilite
     %p
       %strong Niveau de diplôme :
       = proposal.consultant.niv_diplome
