@@ -42,7 +42,7 @@ class CollaboratorsController < ApplicationController
   def update
     respond_to do |format|
       if @collaborator.update(collaborator_params)
-        format.html { redirect_to @collaborator.entity, notice: "Le Collaborateur #{@collaborator.name} a été modifié avec succès." }
+        format.html { redirect_to @collaborator, notice: "Le Collaborateur #{@collaborator.name} a été modifié avec succès." }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

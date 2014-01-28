@@ -10,7 +10,7 @@
       %th Consultant
       %th Date
       %th Nb jours
-      %th Etat
+      %th Eligibilité
       %th Actions
   %tbody
     - @propositions.each do |proposal|
@@ -18,15 +18,21 @@
         %td= proposal.consultant.name
         %td= proposal.date
         %td= proposal.nbre_jour
-        %td= proposal.etat
+        %td= proposal.consultant.eligibilite
         %td
+          = link_to "Modifier Collaborateur", edit_collaborator_path(proposal.consultant), class: "btn btn-mini"
           = link_to "Supprimer", proposal_path(proposal), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
 
-.btn-group
-  %a{class: "btn btn-info dropdown-toggle", data: {toggle: "dropdown"}, href: "#"}
-    Créer Une Proposition
-    %span.caret
-  %ul.dropdown-menu
-    - @entites.each do |entite|
-      %li= link_to entite.name, creer_propositions_entity_path(entite)
-= link_to "Publier Propositions", publier_proposals_path, class: "btn btn-info"
+- afficher = true
+- if Proposal.a_traiter.any? and Proposal.last.etat != "créée"
+  - afficher = false
+
+- if afficher
+  .btn-group
+    %a{class: "btn btn-info dropdown-toggle", data: {toggle: "dropdown"}, href: "#"}
+      Créer Une Proposition
+      %span.caret
+    %ul.dropdown-menu
+      - @entites.each do |entite|
+        %li= link_to entite.name, creer_propositions_entity_path(entite)
+  = link_to "Publier Propositions", publier_proposals_path, class: "btn btn-info"
