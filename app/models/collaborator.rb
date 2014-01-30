@@ -45,6 +45,6 @@ class Collaborator < ActiveRecord::Base
   end
 
   def profil_valide?
-   !self.eligibilite.nil?
+   !eligibilite.to_s.empty?
   end
 end

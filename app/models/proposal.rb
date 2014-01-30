@@ -15,10 +15,13 @@
 #
 
 class Proposal < ActiveRecord::Base
+  before_validation :initialiser_date_si_null, :initialiser_nombre_jours_si_null
   validates :consultant_id, presence: { message: "Ne peut être vide" }
   validates :entity_id,     presence: { message: "Ne peut être vide" }
   validates :etat,          presence: { message: "Ne peut être vide" }
   validates :date,          presence: { message: "Ne peut être vide" }
+  validates :nbre_jour,     inclusion: {in: 1..5, message: "Le nombre de jours doit être compris entre 1 et 5"}
+  validate  :unicite_proposition, on: :create
 
   scope :disponibles, -> { where etat: "disponible" }
   scope :reservees,   -> { where etat: "reservée" }
@@ -79,7 +82,17 @@ class Proposal < ActiveRecord::Base
   def present?
     !Proposal.where(consultant_id: consultant_id, etat: "arrivée", date: Time.now.all_week).empty?
   end
-   # before_validation do |proposal|
-  #  proposal.date = Time.now.next_week.strftime("%d-%m-%Y") if proposal.date.nil?
- # end
+
+  protected
+  def unicite_proposition
+    errors.add(:date, "Il ne peut y avoir q'une proposition par consultant pour chaque semaine") unless Proposal.where(consultant_id: consultant_id, date: date.to_time.all_week).empty?
+  end
+
+  def initialiser_date_si_null
+    self.date = Time.now.next_week.strftime("%d-%m-%Y") if date.nil?
+  end
+
+  def initialiser_nombre_jours_si_null
+    self.nbre_jour = 5 if nbre_jour.nil?
+  end
 end
