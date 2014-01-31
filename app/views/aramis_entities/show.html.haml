@@ -1,0 +1,14 @@
+.page-header
+  %h1 Entité Aramis
+
+%p
+  %strong Nom :
+  = @aramis_entity.name
+%p
+  %strong Description :
+  = @aramis_entity.description
+
+.form-actions
+  = link_to "Retour aux Entités Aramis", aramis_entities_path, class:  'btn'
+  = link_to "Modifier", edit_aramis_entity_path(@aramis_entity), class:  'btn'
+  = link_to "Supprimer", aramis_entity_path(@aramis_entity), method: "delete", data:  { confirm: "Êtes-vous sûr ?" }, class: 'btn btn-danger'

@@ -1,9 +1,10 @@
 = simple_form_for @project, :html => { :class => 'form-horizontal' } do |f|
-  = f.input :name, label: "Nom"
+  = f.input       :name, label: "Nom"
   = f.association :domain, label: "Domamine", prompt: "Sélectionner le domaine"
-  = f.association :chef, collection: Collaborator.consultants, prompt: "Sélectionner le chef du projet"
-  = f.association :maitrise_ouvrage, label: "Maître d'ouvrage", collection: Collaborator.consultants, prompt: "Sélectionner le maître d'ouvrage"
-  = f.input :description
+  = f.association :chef, collection: Collaborator.consultants, prompt: "Sélectionner un collaborateur"
+  = f.association :maitrise_ouvrage, label: "Maître d'ouvrage", collection: Collaborator.consultants, prompt: "Sélectionner un collaborateur"
+  = f.input       :code
+  = f.input       :description
   .form-actions
     = f.button :submit, :class => 'btn-primary'
     = link_to "Annuler", projects_path, :class => 'btn'

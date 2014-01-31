@@ -2,7 +2,7 @@
 .page-header
   %h1 Nouveau Collaborateur
 =# render :partial => "form"
-= simple_form_for @collaborator, :html => { :class => 'form-horizontal' } do |f|
+= simple_form_for @collaborator, html: { class: 'form-horizontal' } do |f|
   = f.association :entity, input_html: {disabled: "disabled"}
   = f.association :entity, as: :hidden
   = f.input :nom
@@ -16,8 +16,9 @@
   = f.input :statut
   = f.input :niv_diplome, collection: [">= Bac + 3", "Bac + 2", "Autres"]
   = f.input :nat_diplome, collection: ["Autre", "Scientifique"]
+  = f.association :aramis_entity, label: "Entité Aramis"
   = f.association :manager, collection: Collaborator.managers, prompt: "Sélectionner le manager du consultant"
   = f.input :commentaire
   .form-actions
-    = f.submit "Créer Collaborateur", :class => 'btn btn-primary'
-    = link_to "Annuler", collaborators_path, :class => 'btn'
+    = f.submit "Créer Collaborateur", class: 'btn btn-primary'
+    = link_to "Annuler", collaborators_path, class: 'btn'

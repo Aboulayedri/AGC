@@ -4,23 +4,21 @@
 
 %p
   %strong Nom :
-  %br
   = @project.name
 %p
   %strong Domaine :
-  %br
   = @project.domain.name
 %p
   %strong Chef :
-  %br
   = @project.chef.name
 %p
   %strong Maîtrise d'ouvrage :
-  %br
   = @project.maitrise_ouvrage.name
 %p
+  %strong Code :
+  = @project.code
+%p
   %strong Description
-  %br
   = @project.description
 
 .form-actions

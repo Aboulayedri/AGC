@@ -1,4 +1,6 @@
 AGCDri::Application.routes.draw do
+  resources :aramis_entities
+
   root "static_pages#home"
   match "/aide",          to: "static_pages#help", via: "get"
   match "/apropos",       to: "static_pages#about", via: "get"

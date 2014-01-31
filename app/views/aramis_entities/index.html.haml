@@ -1,0 +1,19 @@
+.page-header
+  %h1 Les Entités Aramis
+%table.table.table-striped
+  %thead
+    %tr
+      %th Nom
+      %th Description
+      %th Actions
+  %tbody
+    - @aramis_entities.each do |aramis_entity|
+      %tr
+        %td= aramis_entity.name
+        %td= aramis_entity.description
+        %td
+          = link_to "Consulter", aramis_entity, class: "btn btn-mini"
+          = link_to "Modifier", edit_aramis_entity_path(aramis_entity), class: 'btn btn-mini'
+          = link_to "Supprimer", aramis_entity_path(aramis_entity), method: :delete, data: { confirm: "Êtes-vous sûr ?" }, class: 'btn btn-mini btn-danger'
+
+= link_to "Nouvelle Entité Aramis", new_aramis_entity_path, class: 'btn btn-primary'

@@ -1,0 +1,2 @@
+module AramisEntitiesHelper
+end

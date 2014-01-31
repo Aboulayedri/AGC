@@ -11,7 +11,7 @@ class ProposalsController < ApplicationController
   
   # GET /affectations
   def gestion_affectations
-    #@propositions_disponibles   = Proposal.a_traiter.disponibles
+    @propositions_validees = Proposal.a_traiter.validees
     @propositions_reservees     = Proposal.a_traiter.reservees
 
     @propositions_disponibles       = []
@@ -34,7 +34,6 @@ class ProposalsController < ApplicationController
   
   # GET /confirmations
   def confirmation_affectations
-    @propositions_validees = Proposal.a_traiter.validees
     @propositions_arrivees = Proposal.a_traiter.arrivees
   end
 

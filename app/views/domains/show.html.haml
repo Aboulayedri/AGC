@@ -4,15 +4,12 @@
 
 %p
   %strong Nom :
-  %br
   = @domain.name
 %p
   %strong Responsable :
-  %br
   = @domain.responsable.try(:name)
 %p
   %strong Description :
-  %br
   = @domain.description
 
 .form-actions
@@ -24,9 +21,10 @@
 = simple_form_for @project, :html => { :class => 'form-horizontal well' } do |f|
   = f.input :name, label: "Nom"
   = f.association :domain, as: :hidden
-  = f.association :chef, collection: Collaborator.consultants.valides, prompt: "Sélectionner le chef du projet"
-  = f.association :maitrise_ouvrage, label: "Maître d'ouvrage", collection: Collaborator.consultants.valides, prompt: "Sélectionner le maître d'ouvrage"
-  = f.input :description
+  = f.association :chef, collection: Collaborator.consultants.valides, prompt: "Sélectionner un collaborateur"
+  = f.association :maitrise_ouvrage, label: "Maître d'ouvrage", collection: Collaborator.consultants.valides, prompt: "Sélectionner un collaborateur"
+  = f.input       :code
+  = f.input       :description
   .form-actions
     = f.button :submit, :class => 'btn-primary'
     = link_to "Annuler", "#", :class => 'btn', id: "annuler_projet"

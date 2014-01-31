@@ -1,4 +1,4 @@
-= simple_form_for @collaborator, :html => { :class => 'form-horizontal' } do |f|
+= simple_form_for @collaborator, html:  { class:  'form-horizontal' } do |f|
   = f.input :nom
   = f.input :prenom, label: "Prénom"
   = f.input :id_karma
@@ -11,8 +11,9 @@
   = f.input :niv_diplome, collection: [">= Bac + 3", "Bac + 2", "Autres"]
   = f.input :nat_diplome, collection: ["Autre", "Scientifique"]
   = f.association :entity, prompt: "Sélectionner l'entité du collaborateur"
+  = f.association :aramis_entity, label: "Entité Aramis"
   = f.association :manager, collection: Collaborator.managers, prompt: "Sélectionner le manager du consultant"
   = f.input :commentaire
   .form-actions
-    = f.button :submit, :class => 'btn-primary'
-    = link_to "Annuler", collaborators_path, :class => 'btn'
+    = f.button :submit, class:  'btn-primary'
+    = link_to "Annuler", collaborators_path, class:  'btn'

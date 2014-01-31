@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140120190903) do
+ActiveRecord::Schema.define(version: 20140131201454) do
+
+  create_table "aramis_entities", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "collaborators", force: true do |t|
     t.string   "prenom"
@@ -30,6 +37,7 @@ ActiveRecord::Schema.define(version: 20140120190903) do
     t.datetime "updated_at"
     t.string   "profil"
     t.string   "eligibilite"
+    t.integer  "aramis_entity_id"
   end
 
   create_table "domains", force: true do |t|
@@ -63,6 +71,7 @@ ActiveRecord::Schema.define(version: 20140120190903) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "code"
   end
 
   create_table "proposals", force: true do |t|
