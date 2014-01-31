@@ -18,7 +18,7 @@ AGCDri::Application.routes.draw do
 
   resources :proposals do
     member do
-      get :reserver
+      patch :reserver
       get :arriver
       get :liberer
       get :valider

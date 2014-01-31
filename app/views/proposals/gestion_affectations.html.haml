@@ -30,7 +30,7 @@
         %th Actions
     %tbody
       - @propositions_disponibles.each do |proposal|
-        = simple_form_for proposal, html: { class: 'form-horizontal' } do |f|
+        = simple_form_for proposal, url: reserver_proposal_path(proposal), html: { class: 'form-horizontal' } do |f|
           %tr
             = f.input :etat, as: :hidden, input_html: { value: "reservée" }
             %td= link_to proposal.consultant.name, "#modal"+proposal.consultant_id.to_s, data: {toggle: "modal"}
@@ -56,7 +56,7 @@
         %th Actions
     %tbody
       - @propositions_non_eligibles.each do |proposal|
-        = simple_form_for proposal, html: { class: 'form-horizontal' } do |f|
+        = simple_form_for proposal, url: reserver_proposal_path(proposal), html: { class: 'form-horizontal' } do |f|
           %tr
             = f.input :etat, as: :hidden, input_html: { value: "reservée" }
             %td= link_to proposal.consultant.name, "#modal"+proposal.consultant_id.to_s, data: {toggle: "modal"}

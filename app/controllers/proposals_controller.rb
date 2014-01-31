@@ -106,12 +106,16 @@ class ProposalsController < ApplicationController
   # GET /proposals/1/reserver
   def reserver
     respond_to do |format|
-      if @proposal.update(proposal_params)
-        format.html { redirect_to :back, notice: 'La proposition a été reservée.' }
-        format.json { head :no_content }
+      if proposal_params[:project_id].to_s.empty?
+        format.html { redirect_to :back, alert: "Réservation refusée car projet absent"}
       else
-        format.html { redirect_to :back, notice: 'Impossible de reserver cette proposition.' }
-        format.json { render json: @proposal.errors, status: :unprocessable_entity }
+        if @proposal.update(proposal_params)
+          format.html { redirect_to :back, notice: 'La proposition a été reservée.' }
+          format.json { head :no_content }
+        else
+          format.html { redirect_to :back, notice: 'Impossible de reserver cette proposition.' }
+          format.json { render json: @proposal.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
