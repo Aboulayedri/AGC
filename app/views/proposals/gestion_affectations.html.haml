@@ -1,8 +1,8 @@
-.page-header
+.page-header.tete
   %h1 
     Gestion des affectations
     = Time.now.next_week.strftime("S%W %Y")
-.table-responsive
+.table-responsive.minimiser
   %table.table.table-striped.table-condensed
     %caption
       %h4 Les consultans sortants
@@ -16,7 +16,7 @@
           %td= link_to proposal.consultant.name, "#modal"+proposal.consultant_id.to_s, "data-toggle" => 'modal'
           %td= proposal.project.name
 
-.table-responsive
+.table-responsive.minimiser
   %table.table.table-striped.table-condensed
     %caption
       %h4 Les consultants disponibles
@@ -40,9 +40,9 @@
             %td= f.association :project, label: false
             %td
               =# link_to "Reserver", "#proposition"+proposal.id.to_s, class: 'btn btn-mini', data: {toggle: "modal"}
-              = f.submit "Réserver", class: "btn"
+              = f.submit "Réserver", class: "btn btn-mini"
 
-.table-responsive
+.table-responsive.minimiser
   %table.table.table-striped.table-condensed
     %caption
       %h4 Les consultants non-éligibles
@@ -64,9 +64,9 @@
             %td= proposal.consultant.profil
             %td= proposal.nbre_jour
             %td= f.association :project, label: false
-            %td= f.submit "Réserver", class: "btn"
+            %td= f.submit "Réserver", class: "btn btn-mini"
 
-.table-responsive
+.table-responsive.minimiser
   %table.table.table-striped.table-condensed
     %caption
       %h4 Les consultants resérvés
@@ -83,10 +83,10 @@
           %td= proposal.consultant.profil
           %td= proposal.project.name
           %td
-            = link_to "Liberer", liberer_proposal_path(proposal), :class => 'btn btn-mini'
-            = link_to "Valider", valider_proposal_path(proposal), :class => 'btn btn-mini'
+            = link_to "Liberer", liberer_proposal_path(proposal), :class => 'btn btn-mini fonction'
+            = link_to "Valider", valider_proposal_path(proposal), :class => 'btn btn-mini fonction'
 
-.table-responsive
+.table-responsive.minimiser
   %table.table.table-striped.table-condensed
     %caption
       %h4 Les consultans validés
