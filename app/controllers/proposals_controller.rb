@@ -102,7 +102,18 @@ class ProposalsController < ApplicationController
     end
   end
 
-  # GET /proposals/1/reserver
+  # Envoie des codes d'imputation des consultant présents pour la semaine encours
+  # GET /proposals/envoyer_codes
+  def envoyer_codes
+    propositions_arrivees = Proposal.where(etat: "arrivée", date: Time.now.all_week)
+    # pour chaque proposition arrivée, on envoie le code d'imputation 
+    propositions_arrivees.each do |proposition_arrivee|
+      CollaboratorMailer.envoyer_codes_imputation(proposition_arrivee).deliver
+    end
+    redirect_to :back, notice: "Les codes d'imputation ont été envoyés aux consultants présents"
+  end
+
+  # PATCH /proposals/1/reserver
   def reserver
     respond_to do |format|
       if proposal_params[:project_id].to_s.empty?

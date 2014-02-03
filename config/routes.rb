@@ -27,6 +27,7 @@ AGCDri::Application.routes.draw do
     end
     collection do
       get :publier
+      get :envoyer_codes
     end
   end
 
