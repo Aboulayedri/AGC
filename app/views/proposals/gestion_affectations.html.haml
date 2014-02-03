@@ -3,7 +3,7 @@
     Gestion des affectations
     = Time.now.next_week.strftime("S%W %Y")
 .table-responsive.minimiser
-  %table.table.table-striped.table-condensed
+  %table.table.table-striped.table-condensed.well
     %caption
       %h4 Les consultans sortants
     %thead
@@ -17,7 +17,7 @@
           %td= proposal.project.name
 
 .table-responsive.minimiser
-  %table.table.table-striped.table-condensed
+  %table.table.table-striped.table-condensed.well
     %caption
       %h4 Les consultants disponibles
     %thead
@@ -40,10 +40,10 @@
             %td= f.association :project, label: false
             %td
               =# link_to "Reserver", "#proposition"+proposal.id.to_s, class: 'btn btn-mini', data: {toggle: "modal"}
-              = f.submit "Réserver", class: "btn btn-mini"
+              = f.submit "Réserver", class: "btn btn-mini action_form"
 
 .table-responsive.minimiser
-  %table.table.table-striped.table-condensed
+  %table.table.table-striped.table-condensed.well
     %caption
       %h4 Les consultants non-éligibles
     %thead
@@ -64,10 +64,10 @@
             %td= proposal.consultant.profil
             %td= proposal.nbre_jour
             %td= f.association :project, label: false
-            %td= f.submit "Réserver", class: "btn btn-mini"
+            %td= f.submit "Réserver", class: "btn btn-mini action_form"
 
 .table-responsive.minimiser
-  %table.table.table-striped.table-condensed
+  %table.table.table-striped.table-condensed.well
     %caption
       %h4 Les consultants resérvés
     %thead
@@ -83,11 +83,11 @@
           %td= proposal.consultant.profil
           %td= proposal.project.name
           %td
-            = link_to "Liberer", liberer_proposal_path(proposal), :class => 'btn btn-mini fonction'
+            = link_to "Libérer", liberer_proposal_path(proposal), :class => 'btn btn-mini fonction'
             = link_to "Valider", valider_proposal_path(proposal), :class => 'btn btn-mini fonction'
 
 .table-responsive.minimiser
-  %table.table.table-striped.table-condensed
+  %table.table.table-striped.table-condensed.well
     %caption
       %h4 Les consultans validés
     %thead
@@ -100,7 +100,7 @@
         %tr
           %td= link_to proposal.consultant.name, "#modal"+proposal.consultant_id.to_s, "data-toggle" => 'modal'
           %td= proposal.project.name
-          %td= link_to "Arriver", arriver_proposal_path(proposal), :class => 'btn btn-mini'
+          %td= link_to "Arriver", arriver_proposal_path(proposal), :class => 'btn btn-mini fonction'
 
 - @propositions_sortantes.each do |proposal|
   - dialog_body = capture do
