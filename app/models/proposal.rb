@@ -19,7 +19,7 @@ class Proposal < ActiveRecord::Base
   validates :consultant_id, presence: { message: "Ne peut être vide" }
   validates :entity_id,     presence: { message: "Ne peut être vide" }
   validates :etat,          presence: { message: "Ne peut être vide" }
-  validates :date,          presence: { message: "Ne peut être vide" }
+  validates :date,          presence: { message: "Ne peut être vide" }, inclusion: {in: Time.now.next_week.all_week, message: "Il n'est pas permis de faire des propositions pour une autre période que la semaine prochaine"}
   validates :nbre_jour,     inclusion: {in: 1..5, message: "Le nombre de jours doit être compris entre 1 et 5"}
   validate  :unicite_proposition, on: :create
 

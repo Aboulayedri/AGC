@@ -2,11 +2,12 @@
 #
 # Table name: aramis_entities
 #
-#  id          :integer          not null, primary key
-#  name        :string(255)
-#  description :text
-#  created_at  :datetime
-#  updated_at  :datetime
+#  id              :integer          not null, primary key
+#  name            :string(255)
+#  description     :text
+#  created_at      :datetime
+#  updated_at      :datetime
+#  project_code_id :integer
 #
 
 require 'spec_helper'

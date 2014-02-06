@@ -34,7 +34,7 @@ class ProposalsController < ApplicationController
   
   # GET /confirmations
   def confirmation_affectations
-    @propositions_arrivees = Proposal.a_traiter.arrivees
+    @propositions_arrivees = Proposal.where(etat: "arrivée", date: Time.now.all_week)
   end
 
   # GET /proposals/1
@@ -59,7 +59,7 @@ class ProposalsController < ApplicationController
 
     respond_to do |format|
       if @proposal.save
-        format.html { redirect_to :back, notice: 'La proposition a été créée avec succès.' }
+        format.html { redirect_to creer_propositions_entity_path(@proposal.entity), notice: 'La proposition a été créée avec succès.' }
         format.json { render action: 'show', status: :created, location: @proposal }
       else
         format.html { render action: 'new' }

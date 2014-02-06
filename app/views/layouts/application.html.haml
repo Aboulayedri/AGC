@@ -42,12 +42,13 @@
               %li.nav-header Les actions
               %li= link_to "Gérer les propositions", proposals_path
               %li= link_to "Gérer les entités", entities_path
+              %li= link_to "Gérer les codes projets", project_codes_path
               %li= link_to "Gérer les entités aramis", aramis_entities_path
               %li= link_to "Gérer les domaines", domains_path
               %li= link_to "Gérer les collaborateurs", collaborators_path
-              %li= link_to "Gérer les projets", projects_path
+              %li=# link_to "Gérer les projets", projects_path
               %li= link_to "Gérer les affectations", affectations_path
-              %li= link_to "Confirmer les arrivées", confirmations_path
+              %li= link_to "Lise des arrivées", confirmations_path
               %li= link_to "Publipostage", envoyer_codes_proposals_path
         .span9
           = bootstrap_flash

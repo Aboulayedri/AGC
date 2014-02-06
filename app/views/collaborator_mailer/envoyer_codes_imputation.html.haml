@@ -3,10 +3,23 @@
   %head
     %meta(charset="utf-8")
   %body
-    %h1
-      Bienvenue à la DRI
-      = @consultant.name
     %p
-      Le code d'imputation de votre activité dans l'outil Aramis est :
-      = "#{@consultant.aramis_entity.name}_#{@projet.code}."
-
+      Bonjour
+      = @consultant.prenom
+      ,
+    %p
+      Voici les codes ARAMIS à utiliser pour saisir ton CRA DRI dans ARAMIS :
+      %br
+      %strong
+        Code Projet :
+      = @consultant.aramis_entity.project_code.name
+      %br
+      %strong
+        Code tâche :
+      = "#{@projet.code}_#{@consultant.aramis_entity.name}"
+    %p Je suis à ta disposition pour toute question.
+    %p
+      Cordialement,
+      %br
+      %strong
+        Olivier Rabilloud

@@ -1,4 +1,6 @@
 AGCDri::Application.routes.draw do
+  resources :project_codes
+
   resources :aramis_entities
 
   root "static_pages#home"

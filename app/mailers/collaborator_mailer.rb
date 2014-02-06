@@ -1,9 +1,9 @@
 class CollaboratorMailer < ActionMailer::Base
-  default from: "abdoulaye.soumare@devoteam.com"
+  default from: "Olivier Rabilloud <olivier.rabilloud@devoteam.com>"
 
   def envoyer_codes_imputation(proposition)
     @consultant = proposition.consultant
     @projet     = proposition.project
-    mail(to: @consultant.email, subject: "Vos codes d'imputation Aramis")
+    mail(to: "#{@consultant.name} <#{@consultant.email}>", subject: "DRI : Codes ARAMIS")
   end
 end

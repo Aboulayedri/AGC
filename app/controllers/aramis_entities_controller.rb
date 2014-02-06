@@ -69,6 +69,6 @@ class AramisEntitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def aramis_entity_params
-      params.require(:aramis_entity).permit(:name, :description)
+      params.require(:aramis_entity).permit(:name, :description, :project_code_id)
     end
 end

@@ -8,6 +8,7 @@
   %thead
     %tr
       %th Consultant
+      %th Entité
       %th Date
       %th Nb jours
       %th Eligibilité
@@ -16,12 +17,13 @@
     - @propositions.each do |proposal|
       %tr
         %td= proposal.consultant.name
+        %td= proposal.consultant.entity.name
         %td= proposal.date
         %td= proposal.nbre_jour
         %td= proposal.consultant.eligibilite
         %td
-          = link_to "Modifier Collaborateur", edit_collaborator_path(proposal.consultant), class: "btn btn-mini"
-          = link_to "Supprimer", proposal_path(proposal), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+          = link_to "Modifier Collaborateur","#collaborateur"+proposal.consultant.id.to_s, class: "btn btn-mini", data: {toggle: "modal"}
+          = link_to "Annuler", proposal_path(proposal), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
 
 - afficher = true
 - if Proposal.a_traiter.any? and Proposal.last.etat != "créée"
@@ -36,3 +38,27 @@
       - @entites.each do |entite|
         %li= link_to entite.name, creer_propositions_entity_path(entite)
   = link_to "Publier Propositions", publier_proposals_path, class: "btn btn-info"
+
+- @propositions.each do |proposal|
+  - dialog_body = capture do
+    = simple_form_for proposal.consultant, :html => { class: 'form-horizontal' } do |f|
+      = f.input :nom
+      = f.input :prenom, label: "Prénom"
+      = f.input :id_karma
+      = f.input :profil
+      = f.input :role, label: "Rôle", collection: ["consultant", "manager", "resp_domaine"], prompt: "Sélectionner le rôle du collaborateur"
+      = f.input :email, placeholder: "prénom.nom@devoteam.com"
+      = f.input :eligibilite, collection: ["éligible", "éligible-conditionnelle", "non-éligible"]
+      = f.input :etat, collection: ["non-validé", "validé"], prompt: "Sélectionner la validité du collaborateur"
+      = f.input :statut
+      = f.input :niv_diplome, collection: [">= Bac + 3", "Bac + 2", "Autres"]
+      = f.input :nat_diplome, collection: ["Autre", "Scientifique"]
+      = f.association :entity, label: "Entité"
+      = f.association :aramis_entity, label: "Entité Aramis"
+      = f.association :manager, collection: proposal.consultant.entity.collaborators.managers, prompt: "Sélectionner le manager du consultant"
+      = f.input :commentaire
+      .form-actions
+        = f.submit "Mettre à jour Collaborateur", class: 'btn btn-primary'
+  = modal_dialog id: "collaborateur"+proposal.consultant.id.to_s,
+  header: { :show_close => true, :dismiss => 'modal', title: "Modification de "+proposal.consultant.name },
+  body: dialog_body

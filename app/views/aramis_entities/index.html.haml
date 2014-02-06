@@ -4,12 +4,14 @@
   %thead
     %tr
       %th Nom
+      %th Code Projet
       %th Description
       %th Actions
   %tbody
     - @aramis_entities.each do |aramis_entity|
       %tr
         %td= aramis_entity.name
+        %td= aramis_entity.project_code.name
         %td= aramis_entity.description
         %td
           = link_to "Consulter", aramis_entity, class: "btn btn-mini"

@@ -1,5 +1,6 @@
 = simple_form_for @aramis_entity, :html => { :class => 'form-horizontal' } do |f|
   = f.input :name
+  = f.association :project_code, label: "Code Projet"
   = f.input :description
   .form-actions
     = f.button :submit, :class => 'btn-primary'
