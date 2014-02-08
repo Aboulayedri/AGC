@@ -18,7 +18,8 @@ class CollaboratorMailer < ActionMailer::Base
     propositions.each do |proposition_valide|
       if Proposal.where(consultant_id: proposition_valide.consultant_id, project_id: proposition_valide.project_id, etat: "arrivée", date: Time.now.all_week).any?
         @reconduits << proposition_valide
-      elsif 
+      end
+      #elsif 
     end
   end
 end
