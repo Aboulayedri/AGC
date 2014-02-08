@@ -10,6 +10,7 @@ class ProjectCodesController < ApplicationController
   # GET /project_codes/1
   # GET /project_codes/1.json
   def show
+    @aramis_entities = @project_code.aramis_entities
   end
 
   # GET /project_codes/new
@@ -28,7 +29,7 @@ class ProjectCodesController < ApplicationController
 
     respond_to do |format|
       if @project_code.save
-        format.html { redirect_to @project_code, notice: 'Project code was successfully created.' }
+        format.html { redirect_to project_codes_path, notice: 'Le Code Projets a été créé avec succès' }
         format.json { render action: 'show', status: :created, location: @project_code }
       else
         format.html { render action: 'new' }
@@ -54,10 +55,14 @@ class ProjectCodesController < ApplicationController
   # DELETE /project_codes/1
   # DELETE /project_codes/1.json
   def destroy
-    @project_code.destroy
-    respond_to do |format|
-      format.html { redirect_to project_codes_url }
-      format.json { head :no_content }
+    if @project_code.aramis_entities.empty?
+      @project_code.destroy
+      respond_to do |format|
+        format.html { redirect_to project_codes_url }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to :back, alert: "Le Code Projets #{@project_code.name} n'a pas été supprimé car il y a des Entités Aramis qui lui sont associées"
     end
   end
 

@@ -55,10 +55,14 @@ class DomainsController < ApplicationController
   # DELETE /domains/1
   # DELETE /domains/1.json
   def destroy
-    @domain.destroy
-    respond_to do |format|
-      format.html { redirect_to domains_url }
-      format.json { head :no_content }
+    if @domain.projects.empty?
+      @domain.destroy
+      respond_to do |format|
+        format.html { redirect_to domains_url, notice: "Le domaine #{@domain.name} a été supprimé avec succès" }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to :back, alert: "Le domaine #{@domain.name} n'a pas été supprimé car il dispose de projets"
     end
   end
 

@@ -13,7 +13,7 @@
   = @entity.description
 
 .form-actions
-  =# link_to "Retour aux Entités", entities_path, :class => 'btn'
+  = link_to "Retour", entities_path, :class => 'btn'
   = link_to "Modifier", edit_entity_path(@entity), :class => 'btn'
   = link_to "Supprimer", entity_path(@entity), :method => "delete", :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-danger'
   =# link_to "Nouveau Collaborateur","#", class: "btn btn-primary", id: "nouv_collaborateur"
@@ -59,14 +59,15 @@
           = link_to "Modifier", edit_proposal_path(proposal), :class => 'btn btn-mini'
           = link_to "Supprimer", proposal_path(proposal), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
 
-%h2 Liste des Collaborateurs
+%h2 Collaborateurs proposés à DRI
 %table.table.table-striped
   %thead
     %tr
       %th Prénom
       %th Nom
       %th Rôle
-      %th Etat
+      %th Eligibilité
+      %th Entité Aramis
       %th Actions
   %tbody
     - @collaborateurs.each do |collaborator|
@@ -74,11 +75,11 @@
         %td= collaborator.prenom
         %td= collaborator.nom
         %td= collaborator.role
-        %td= collaborator.etat
+        %td= collaborator.eligibilite
+        %td= collaborator.aramis_entity.try(:name)
         %td
-          = link_to "Consulter", collaborator, :class => 'btn btn-mini'
-          = link_to "Modifier", edit_collaborator_path(collaborator), :class => 'btn btn-mini'
-          = link_to "Supprimer", collaborator_path(collaborator), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+          = link_to "Gérer", collaborator, :class => 'btn btn-mini'
+          =# link_to "Supprimer", collaborator_path(collaborator), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
 
 :javascript
   $(".datepicker").datepicker({

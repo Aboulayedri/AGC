@@ -42,7 +42,7 @@ class ProjectsController < ApplicationController
   def update
     respond_to do |format|
       if @project.update(project_params)
-        format.html { redirect_to @project.domain, notice: 'Le Projet ' + @project.name + ' a été mis à jour.' }
+        format.html { redirect_to @project, notice: 'Le Projet ' + @project.name + ' a été mis à jour.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

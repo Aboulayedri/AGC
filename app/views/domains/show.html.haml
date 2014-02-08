@@ -13,12 +13,12 @@
   = @domain.description
 
 .form-actions
-  = # link_to "Retour aux Domaines", domains_path, :class => 'btn'
+  = link_to "Retour", domains_path, class: 'btn'
   = link_to "Modifier", edit_domain_path(@domain), :class => 'btn'
   = link_to "Supprimer", domain_path(@domain), :method => "delete", :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-danger'
-  = link_to "Nouveau Projet", "#", class: "btn btn-primary", id: "nouv_projet"
+  = link_to "Nouveau Projet", "#", class: "btn btn-info", id: "nouv_projet"
 
-= simple_form_for @project, :html => { :class => 'form-horizontal well' } do |f|
+= simple_form_for @project, html: { class: 'form-horizontal well' } do |f|
   = f.input :name, label: "Nom"
   = f.association :domain, as: :hidden
   = f.association :chef, collection: Collaborator.consultants.valides, prompt: "Sélectionner un collaborateur"
@@ -26,8 +26,8 @@
   = f.input       :code
   = f.input       :description
   .form-actions
-    = f.button :submit, :class => 'btn-primary'
-    = link_to "Annuler", "#", :class => 'btn', id: "annuler_projet"
+    = f.submit "Créer Projet", class: 'btn btn-primary'
+    = link_to "Annuler", "#", class: 'btn', id: "annuler_projet"
 
 %h2 Liste des Projets
 %table.table.table-striped
@@ -44,9 +44,9 @@
         %td= project.chef.try(:name)
         %td= project.maitrise_ouvrage.try(:name)
         %td
-          = link_to "Consulter", project, :class => 'btn btn-mini'
-          = link_to "Modifier", edit_project_path(project), :class => 'btn btn-mini'
-          = link_to "Supprimer", project_path(project), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+          = link_to "Gérer", project, :class => 'btn btn-mini'
+          =# link_to "Modifier", edit_project_path(project), :class => 'btn btn-mini'
+          =# link_to "Supprimer", project_path(project), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
 
 :javascript
   $(document).ready(function() {

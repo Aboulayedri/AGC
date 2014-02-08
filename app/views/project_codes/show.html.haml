@@ -1,13 +1,39 @@
 - model_class = ProjectCode
 .page-header
-  %h1=t '.title', :default => model_class.model_name.human.titleize
+  %h1 Code Projets
 
 %p
-  %strong= model_class.human_attribute_name(:name) + ':'
-  %br
+  %strong Nom :
   = @project_code.name
 
 .form-actions
-  = link_to t('.back', :default => t("helpers.links.back")), project_codes_path, :class => 'btn'
-  = link_to t('.edit', :default => t("helpers.links.edit")), edit_project_code_path(@project_code), :class => 'btn'
-  = link_to t('.destroy', :default => t("helpers.links.destroy")), project_code_path(@project_code), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
+  = link_to "Retour", project_codes_path, class: 'btn'
+  = link_to "Modifier", edit_project_code_path(@project_code), class: 'btn'
+  = link_to "Supprimer", project_code_path(@project_code), method: "delete", data: { confirm: "Êtes-vous sûr ?" }, class: 'btn btn-danger'
+  = link_to "Nouvelle Entité Aramis", "#aramis_entity", class: 'btn btn-info', data: {toggle: "modal"}
+
+%h2 Liste des Entités Aramis du Code Projets
+%table.table.table-striped
+  %thead
+    %tr
+      %th Nom
+      %th Actions
+  %tbody
+    - @aramis_entities.each do |aramis_entity|
+      %tr
+        %td= aramis_entity.name
+        %td
+          = link_to "Gérer", aramis_entity, class: "btn btn-mini"
+          = link_to "Supprimer", aramis_entity_path(aramis_entity), method: :delete, data: { confirm: "Êtes-vous sûr ?" }, class: 'btn btn-mini btn-danger'
+
+- dialog_body = capture do
+  = simple_form_for @project_code.aramis_entities.new, html: { class: 'form-horizontal' } do |f|
+    = f.input :name
+    = f.association :project_code, as: :hidden
+    = f.input :description
+    .form-actions
+      = f.submit "Créer Entité Aramis", class: 'btn btn-primary'
+= modal_dialog id: "aramis_entity",
+header: { show_close: true, dismiss: 'modal', title: "Nouvelle Entité Aramis pour "+@project_code.name },
+body: dialog_body,
+footer: content_tag(:button, 'Annuler', class: 'btn', "data-dismiss" => "modal")

@@ -15,8 +15,8 @@
         %td= domain.responsable.try(:name)
         %td= domain.description
         %td
-          = link_to "Consulter", domain, :class => 'btn btn-mini'
+          = link_to "Gérer", domain, :class => 'btn btn-mini'
           =# link_to "Modifier", edit_domain_path(domain), :class => 'btn btn-mini'
           = link_to "Supprimer", domain_path(domain), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
 
-= link_to "Nouveau Domaine", new_domain_path, :class => 'btn btn-primary'
+= link_to "Nouveau Domaine", new_domain_path, :class => 'btn btn-info'

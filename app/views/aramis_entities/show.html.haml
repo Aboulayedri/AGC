@@ -5,10 +5,31 @@
   %strong Nom :
   = @aramis_entity.name
 %p
+  %strong Code Projets :
+  = @aramis_entity.project_code.name
+%p
   %strong Description :
   = @aramis_entity.description
 
 .form-actions
-  = link_to "Retour aux Entités Aramis", aramis_entities_path, class:  'btn'
+  = link_to "Retour", @aramis_entity.project_code, class:  'btn'
   = link_to "Modifier", edit_aramis_entity_path(@aramis_entity), class:  'btn'
   = link_to "Supprimer", aramis_entity_path(@aramis_entity), method: "delete", data:  { confirm: "Êtes-vous sûr ?" }, class: 'btn btn-danger'
+
+%h2 Liste des Collaborateurs
+%table.table.table-striped
+  %thead
+    %tr
+      %th Prénom
+      %th Nom
+      %th Rôle
+      %th Eligibilité
+      %th Entité
+  %tbody
+    - @collaborateurs.each do |collaborator|
+      %tr.collaborateur
+        %td= collaborator.prenom
+        %td= collaborator.nom
+        %td= collaborator.role
+        %td= collaborator.eligibilite
+        %td= collaborator.entity.name

@@ -10,6 +10,7 @@ class AramisEntitiesController < ApplicationController
   # GET /aramis_entities/1
   # GET /aramis_entities/1.json
   def show
+    @collaborateurs = @aramis_entity.collaborators
   end
 
   # GET /aramis_entities/new
@@ -28,7 +29,7 @@ class AramisEntitiesController < ApplicationController
 
     respond_to do |format|
       if @aramis_entity.save
-        format.html { redirect_to @aramis_entity, notice: 'Aramis entity was successfully created.' }
+        format.html { redirect_to @aramis_entity.project_code, notice: "L'Entité Aramis #{@aramis_entity.name} a été créée avec succès" }
         format.json { render action: 'show', status: :created, location: @aramis_entity }
       else
         format.html { render action: 'new' }
@@ -42,7 +43,7 @@ class AramisEntitiesController < ApplicationController
   def update
     respond_to do |format|
       if @aramis_entity.update(aramis_entity_params)
-        format.html { redirect_to @aramis_entity, notice: 'Aramis entity was successfully updated.' }
+        format.html { redirect_to @aramis_entity, notice: "L'Entité Aramis #{@aramis_entity.name} a été modifiée avec succès" }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -54,10 +55,14 @@ class AramisEntitiesController < ApplicationController
   # DELETE /aramis_entities/1
   # DELETE /aramis_entities/1.json
   def destroy
-    @aramis_entity.destroy
-    respond_to do |format|
-      format.html { redirect_to aramis_entities_url }
-      format.json { head :no_content }
+    if @aramis_entity.collaborators.empty?
+      @aramis_entity.destroy
+      respond_to do |format|
+        format.html { redirect_to @aramis_entity.project_code, notice: "L'Entité Aramis #{@aramis_entity.name} a été supprimée avec succès"}
+        format.json { head :no_content }
+      end
+    else
+      redirect_to :back, alert: "L'Entité Aramis #{@aramis_entity.name} n'a pas été supprimée car elle dispose de Collaborateurs"
     end
   end
 

@@ -11,7 +11,6 @@ class ProposalsController < ApplicationController
   
   # GET /affectations
   def gestion_affectations
-    @propositions_validees = Proposal.a_traiter.validees
     @propositions_reservees     = Proposal.a_traiter.reservees
 
     @propositions_disponibles       = []
@@ -34,6 +33,7 @@ class ProposalsController < ApplicationController
   
   # GET /confirmations
   def confirmation_affectations
+    @propositions_validees = Proposal.where(etat: "validée", date: Time.now.all_week)
     @propositions_arrivees = Proposal.where(etat: "arrivée", date: Time.now.all_week)
   end
 
@@ -82,7 +82,7 @@ class ProposalsController < ApplicationController
        proposition.publier
        proposition.reconduire unless !proposition.present?
      end
-     redirect_to :back, notice: "Les propositions ont été publiées"
+     redirect_to affectations_path, notice: "Les propositions ont été publiées"
    else
      redirect_to :back, alert: "La publication n'est pas permise car il y a des profils non-validés"
    end
@@ -175,7 +175,7 @@ class ProposalsController < ApplicationController
   def destroy
     @proposal.destroy
     respond_to do |format|
-      format.html { redirect_to proposals_url }
+      format.html { redirect_to :back, notice: "La proposition a été supprimée"}
       format.json { head :no_content }
     end
   end

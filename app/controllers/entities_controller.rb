@@ -68,13 +68,27 @@ class EntitiesController < ApplicationController
     end
   end
 
+  # Envoie des reportings aux managers des entités
+  # GET /entities/envoyer_reportings
+  def envoyer_reportings
+    # pour chaque entité, on envoie le reporting
+    Entity.all.each do |entity|
+      CollaboratorMailer.envoyer_rapport_hebdomadaire(entity).deliver
+    end
+    redirect_to :back, notice: "Les rapports ont été envoyés aux managers des différentes entités"
+  end
+
   # DELETE /entities/1
   # DELETE /entities/1.json
   def destroy
-    @entity.destroy
-    respond_to do |format|
-      format.html { redirect_to entities_url }
-      format.json { head :no_content }
+    if @entity.collaborators.empty?
+      @entity.destroy
+      respond_to do |format|
+        format.html { redirect_to entities_url }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to :back, alert: "L'entité #{@entity.name} n'a pas été supprimée car elle dispose de collaborateurs"
     end
   end
 

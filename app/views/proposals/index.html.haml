@@ -4,7 +4,7 @@
     Propositions
     = Time.now.next_week.strftime("S%W %Y")
 
-%table.table.table-striped
+%table.table.table-striped.table-condensed.minimiser.well
   %thead
     %tr
       %th Consultant
@@ -22,8 +22,8 @@
         %td= proposal.nbre_jour
         %td= proposal.consultant.eligibilite
         %td
-          = link_to "Modifier Collaborateur","#collaborateur"+proposal.consultant.id.to_s, class: "btn btn-mini", data: {toggle: "modal"}
-          = link_to "Annuler", proposal_path(proposal), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+          = link_to "Modifier Collaborateur","#collaborateur"+proposal.consultant.id.to_s, class: "btn btn-mini fonction", data: {toggle: "modal"}
+          = link_to "Annuler", proposal_path(proposal), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger fonction'
 
 - afficher = true
 - if Proposal.a_traiter.any? and Proposal.last.etat != "créée"
@@ -31,13 +31,13 @@
 
 - if afficher
   .btn-group
-    %a{class: "btn btn-info dropdown-toggle", data: {toggle: "dropdown"}, href: "#"}
+    %a{class: "btn btn-info dropdown-toggle btn-mini", data: {toggle: "dropdown"}, href: "#"}
       Créer Une Proposition
       %span.caret
     %ul.dropdown-menu
       - @entites.each do |entite|
         %li= link_to entite.name, creer_propositions_entity_path(entite)
-  = link_to "Publier Propositions", publier_proposals_path, class: "btn btn-info"
+  = link_to "Publier Propositions", publier_proposals_path, class: "btn btn-info btn-mini"
 
 - @propositions.each do |proposal|
   - dialog_body = capture do
@@ -49,16 +49,17 @@
       = f.input :role, label: "Rôle", collection: ["consultant", "manager", "resp_domaine"], prompt: "Sélectionner le rôle du collaborateur"
       = f.input :email, placeholder: "prénom.nom@devoteam.com"
       = f.input :eligibilite, collection: ["éligible", "éligible-conditionnelle", "non-éligible"]
-      = f.input :etat, collection: ["non-validé", "validé"], prompt: "Sélectionner la validité du collaborateur"
-      = f.input :statut
+      =# f.input :etat, collection: ["non-validé", "validé"], prompt: "Sélectionner la validité du collaborateur"
+      =# f.input :statut
       = f.input :niv_diplome, collection: [">= Bac + 3", "Bac + 2", "Autres"]
       = f.input :nat_diplome, collection: ["Autre", "Scientifique"]
       = f.association :entity, label: "Entité"
       = f.association :aramis_entity, label: "Entité Aramis"
-      = f.association :manager, collection: proposal.consultant.entity.collaborators.managers, prompt: "Sélectionner le manager du consultant"
+      =# f.association :manager, collection: proposal.consultant.entity.collaborators.managers, prompt: "Sélectionner le manager du consultant"
       = f.input :commentaire
       .form-actions
         = f.submit "Mettre à jour Collaborateur", class: 'btn btn-primary'
   = modal_dialog id: "collaborateur"+proposal.consultant.id.to_s,
-  header: { :show_close => true, :dismiss => 'modal', title: "Modification de "+proposal.consultant.name },
-  body: dialog_body
+  header: { show_close: true, dismiss: 'modal', title: "Modification de "+proposal.consultant.name },
+  body: dialog_body,
+  footer: content_tag(:button, 'Annuler', class: 'btn', "data-dismiss" => "modal")

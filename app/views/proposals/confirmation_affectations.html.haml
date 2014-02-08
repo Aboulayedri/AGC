@@ -2,14 +2,47 @@
   %h1 
     Confirmation des affectations
     = Time.now.next_week.strftime("S%W %Y")
-.table-responsive
-  %table.table.table-striped.table-condensed
+
+.table-responsive.minimiser
+  %table.table.table-striped.table-condensed.well
+    %caption
+      %h4 Les consultans validés
+    %thead
+      %tr
+        %th Consultant
+        %th Projet
+        %th Actions
+    %tbody
+      - @propositions_validees.each do |proposal|
+        %tr
+          %td= link_to proposal.consultant.name, "#modal"+proposal.consultant_id.to_s, "data-toggle" => 'modal'
+          %td= proposal.project.name
+          %td= link_to "Arriver", arriver_proposal_path(proposal), :class => 'btn btn-mini fonction'
+
+- @propositions_validees.each do |proposal|
+  - dialog_body = capture do
+    %p
+      %strong Niveau de diplôme :
+      = proposal.consultant.niv_diplome
+    %p
+      %strong Nature du diplôme :
+      = proposal.consultant.nat_diplome
+    %p
+      %strong Entité :
+      = proposal.consultant.entity.name
+  = modal_dialog id: "modal"+proposal.consultant_id.to_s,
+  header: { title: proposal.consultant.name },
+  body: dialog_body,
+  footer: content_tag(:button, 'Fermer', class: 'btn', "data-dismiss" => "modal")
+
+.table-responsive.minimiser
+  %table.table.table-striped.table-condensed.well
     %caption
       %h4 Les consultants arrivés
     %thead
       %tr
         %th Consultant
-        %th Nombre de jours
+        %th Nb jours
         %th Projet
     %tbody
       - @propositions_arrivees.each do |proposal|

@@ -43,6 +43,9 @@ AGCDri::Application.routes.draw do
     member do
       get :creer_propositions
     end
+    collection do
+      get :envoyer_reportings
+    end
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
