@@ -17,10 +17,10 @@ class ProposalsController < ApplicationController
     @propositions_non_eligibles     = []
     propositions = Proposal.where(etat: "disponible", date: Time.now.next_week.all_week)
     propositions.each do |proposition|
-      if proposition.consultant.eligibilite == "éligible"
-        @propositions_disponibles << proposition
-      else
+      if proposition.consultant.eligibilite == "non-éligible"
         @propositions_non_eligibles << proposition
+      else
+        @propositions_disponibles << proposition
       end
     end
 

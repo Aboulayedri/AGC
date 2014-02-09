@@ -10,16 +10,40 @@ class CollaboratorMailer < ActionMailer::Base
   def envoyer_rapport_hebdomadaire(entity)
     @manager = entity.manager
 
-    propositions_valides = Proposal.where(entity_id: entity.id, etat: "validée", date: Time.now.next_week.all_week)
     @reconduits = []
     @changement_projet = []
     @revenus = []
     @nouveaux = []
-    propositions.each do |proposition_valide|
+    propositions_valides = Proposal.where(entity_id: entity.id, etat: "validée", date: Time.now.next_week.all_week)
+    propositions_valides.each do |proposition_valide|
       if Proposal.where(consultant_id: proposition_valide.consultant_id, project_id: proposition_valide.project_id, etat: "arrivée", date: Time.now.all_week).any?
         @reconduits << proposition_valide
+      elsif Proposal.where("consultant_id = ? and project_id != ? etat = ? and date in ?", proposition_valide.consultant_id, proposition_valide.project_id, "arrivée", Time.now.all_week).any?
+        @changement_projet << proposition_valide
+      elsif Proposal.where("consultant_id = ? and id != ? and etat = ?", proposition_valide.consultant_id, proposition_valide.id, "arrivée").any?
+        @revenus << proposition_valide
+      else
+        @nouveaux << proposition_valide
       end
-      #elsif 
     end
+
+    @sortants = []
+    propositions_presentes = Proposal.where(etat: "arrivée", date: Time.now.all_week)
+    propositions_presentes.each do |proposition|
+      @sortants << proposition unless Proposal.where(consultant_id: proposition.consultant_id, date: Time.now.next_week.all_week).any?
+    end
+
+    @attentes = []
+    @eligibilite_conditionnelle = []
+    propositions = Proposal.where(etat: "disponible", date: Time.now.next_week.all_week)
+    propositions.each do |proposition|
+      if proposition.consultant.eligibilite == "éligible"
+        @attentes << proposition
+      else
+        @eligibilite_conditionnelle << proposition
+      end
+    end
+
+    mail(to: "#{@manager.name} <#{@manager.email}>", subject: "DRI : Rapport hebdomadaire pour #{entity.name}")
   end
 end
