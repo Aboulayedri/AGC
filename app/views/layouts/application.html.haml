@@ -50,6 +50,7 @@
               %li= link_to "Gérer les affectations", affectations_path
               %li= link_to "Confirmer les arrivées", confirmations_path
               %li= link_to "Publipostage", envoyer_codes_proposals_path, data: {confirm: "Êtes-vous sûr de vouloir envoyer les codes Aramis ?"}
+              %li= link_to "Reporting", envoyer_reportings_entities_path, data: {confirm: "Êtes-vous sûr de vouloir envoyer les reportings de la semaine ?"}
         .span9
           = bootstrap_flash
           = yield

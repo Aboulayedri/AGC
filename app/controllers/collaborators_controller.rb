@@ -10,6 +10,7 @@ class CollaboratorsController < ApplicationController
   # GET /collaborators/1
   # GET /collaborators/1.json
   def show
+    @propositions = Proposal.where(consultant_id: @collaborator.id)
   end
 
   # GET /collaborators/new
@@ -28,7 +29,7 @@ class CollaboratorsController < ApplicationController
 
     respond_to do |format|
       if @collaborator.save
-        format.html { redirect_to :back, notice: "Le Collaborateur #{@collaborator.name} a été créé avec succès." }
+        format.html { redirect_to creer_propositions_entity_path(@collaborator.entity), notice: "Le Collaborateur #{@collaborator.name} a été créé avec succès." }
         format.json { render action: 'show', status: :created, location: @collaborator }
       else
         format.html { render action: 'new' }

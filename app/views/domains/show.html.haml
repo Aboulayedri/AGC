@@ -25,6 +25,7 @@
   = f.association :maitrise_ouvrage, label: "Maître d'ouvrage", collection: Collaborator.consultants.valides, prompt: "Sélectionner un collaborateur"
   = f.input       :code
   = f.input       :description
+  = f.input       :etat, as: :hidden, input_html: {value: "activé"}
   .form-actions
     = f.submit "Créer Projet", class: 'btn btn-primary'
     = link_to "Annuler", "#", class: 'btn', id: "annuler_projet"
@@ -36,6 +37,7 @@
       %th Nom
       %th Chef
       %th Maître d'ouvrage
+      %th Etat
       %th Actions
   %tbody
     - @domain.projects.each do |project|
@@ -43,6 +45,7 @@
         %td= project.name
         %td= project.chef.try(:name)
         %td= project.maitrise_ouvrage.try(:name)
+        %td= project.etat
         %td
           = link_to "Gérer", project, :class => 'btn btn-mini'
           =# link_to "Modifier", edit_project_path(project), :class => 'btn btn-mini'

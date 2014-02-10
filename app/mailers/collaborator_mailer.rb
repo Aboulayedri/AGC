@@ -8,6 +8,7 @@ class CollaboratorMailer < ActionMailer::Base
   end
 
   def envoyer_rapport_hebdomadaire(entity)
+    @entity = entity
     @manager = entity.manager
 
     @reconduits = []
@@ -18,7 +19,7 @@ class CollaboratorMailer < ActionMailer::Base
     propositions_valides.each do |proposition_valide|
       if Proposal.where(consultant_id: proposition_valide.consultant_id, project_id: proposition_valide.project_id, etat: "arrivée", date: Time.now.all_week).any?
         @reconduits << proposition_valide
-      elsif Proposal.where("consultant_id = ? and project_id != ? etat = ? and date in ?", proposition_valide.consultant_id, proposition_valide.project_id, "arrivée", Time.now.all_week).any?
+      elsif Proposal.where("consultant_id = ? and project_id != ? and etat = ? and date >= ? and date <= ?", proposition_valide.consultant_id, proposition_valide.project_id, "arrivée", Time.now.beginning_of_week, Time.now.end_of_week).any?
         @changement_projet << proposition_valide
       elsif Proposal.where("consultant_id = ? and id != ? and etat = ?", proposition_valide.consultant_id, proposition_valide.id, "arrivée").any?
         @revenus << proposition_valide
@@ -28,18 +29,18 @@ class CollaboratorMailer < ActionMailer::Base
     end
 
     @sortants = []
-    propositions_presentes = Proposal.where(etat: "arrivée", date: Time.now.all_week)
+    propositions_presentes = Proposal.where(entity_id: @entity.id, etat: "arrivée", date: Time.now.all_week)
     propositions_presentes.each do |proposition|
       @sortants << proposition unless Proposal.where(consultant_id: proposition.consultant_id, date: Time.now.next_week.all_week).any?
     end
 
     @attentes = []
     @eligibilite_conditionnelle = []
-    propositions = Proposal.where(etat: "disponible", date: Time.now.next_week.all_week)
+    propositions = Proposal.where(entity_id: @entity.id, etat: "disponible", date: Time.now.next_week.all_week)
     propositions.each do |proposition|
       if proposition.consultant.eligibilite == "éligible"
         @attentes << proposition
-      else
+      elsif proposition.consultant.eligibilite == "éligible-conditionnelle"
         @eligibilite_conditionnelle << proposition
       end
     end

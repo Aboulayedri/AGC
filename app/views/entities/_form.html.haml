@@ -3,5 +3,5 @@
   = f.association :manager, collection: Collaborator.managers, prompt: "Sélectionner le manager de l'entité"
   = f.input :description
   .form-actions
-    = f.button :submit, :class => 'btn-primary'
-    = link_to "Annuler", entities_path, :class => 'btn'
+    = f.submit "Mettre à jour", class: 'btn btn-primary'
+    = link_to "Annuler", @entity, class: 'btn'

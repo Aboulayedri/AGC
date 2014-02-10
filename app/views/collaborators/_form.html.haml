@@ -6,14 +6,14 @@
   = f.input :role, label: "Rôle", collection: ["consultant", "manager", "resp_domaine"], prompt: "Sélectionner le rôle du collaborateur"
   = f.input :email, placeholder: "prénom.nom@devoteam.com"
   = f.input :eligibilite, collection: ["éligible", "non-éligible"], prompt: "Sélectionner l'éligibilité du consultant"
-  = f.input :etat, collection: ["non-validé", "validé"], prompt: "Sélectionner la validité du collaborateur"
-  = f.input :statut
+  -# = f.input :etat, collection: ["non-validé", "validé"], prompt: "Sélectionner la validité du collaborateur"
+  -# = f.input :statut
   = f.input :niv_diplome, collection: [">= Bac + 3", "Bac + 2", "Autres"]
   = f.input :nat_diplome, collection: ["Autre", "Scientifique"]
   = f.association :entity, prompt: "Sélectionner l'entité du collaborateur"
   = f.association :aramis_entity, label: "Entité Aramis"
-  = f.association :manager, collection: Collaborator.managers, prompt: "Sélectionner le manager du consultant"
+  -# = f.association :manager, collection: Collaborator.managers, prompt: "Sélectionner le manager du consultant"
   = f.input :commentaire
   .form-actions
-    = f.button :submit, class:  'btn-primary'
-    = link_to "Annuler", collaborators_path, class:  'btn'
+    = f.submit "Mettre à jour", class:  'btn btn-primary'
+    = link_to "Annuler", @collaborators, class:  'btn'

@@ -123,7 +123,7 @@ class ProposalsController < ApplicationController
           format.html { redirect_to :back, notice: 'La proposition a été reservée.' }
           format.json { head :no_content }
         else
-          format.html { redirect_to :back, notice: 'Impossible de reserver cette proposition.' }
+          format.html { redirect_to :back, alert: 'Impossible de reserver cette proposition.' }
           format.json { render json: @proposal.errors, status: :unprocessable_entity }
         end
       end
@@ -137,7 +137,7 @@ class ProposalsController < ApplicationController
         format.html { redirect_to :back, notice: 'La réservation du consultant a été validée.' }
         format.json { head :no_content }
       else
-        format.html { redirect_to :back, notice: 'Impossible de valider la réservation du consultant.' }
+        format.html { redirect_to :back, alert: 'Impossible de valider la réservation du consultant.' }
         format.json { render json: @proposal.errors, status: :unprocessable_entity }
       end
     end
@@ -150,7 +150,7 @@ class ProposalsController < ApplicationController
         format.html { redirect_to :back, notice: 'La venue du consultant a été confirmée.' }
         format.json { head :no_content }
       else
-        format.html { redirect_to :back, notice: 'Impossible de confirmer la venue du consultant.' }
+        format.html { redirect_to :back, alert: 'Impossible de confirmer la venue du consultant.' }
         format.json { render json: @proposal.errors, status: :unprocessable_entity }
       end
     end
@@ -163,7 +163,7 @@ class ProposalsController < ApplicationController
         format.html { redirect_to :back, notice: 'Le consultant est de nouveau disponible.' }
         format.json { head :no_content }
       else
-        format.html { redirect_to :back, notice: 'Impossible de rendre disponible le consultant.' }
+        format.html { redirect_to :back, alert: 'Impossible de rendre disponible le consultant.' }
         format.json { render json: @proposal.errors, status: :unprocessable_entity }
       end
     end

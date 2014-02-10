@@ -29,6 +29,8 @@ class Collaborator < ActiveRecord::Base
   validates :role,      presence: { message: "Ne peut être vide" }, inclusion: { in: %w(consultant manager resp_domaine), message: "%{value} n'est pas un rôle valide" }
   validates :entity_id, presence: { message: "Ne peut être vide" }
   validates :aramis_entity_id, presence: { message: "Ne peut être vide" }
+  validates :niv_diplome, presence: { message: "Ne peut être vide si éligibilité saisie" }, unless: :eligibilite_absent?
+  validates :nat_diplome, presence: { message: "Ne peut être vide si éligibilité saisie" }, unless: :eligibilite_absent?
 
   scope :managers,     -> { where role: "manager" }
   scope :consultants,  -> { where role: "consultant" }
@@ -48,5 +50,9 @@ class Collaborator < ActiveRecord::Base
 
   def profil_valide?
    !eligibilite.to_s.empty?
+  end
+
+  def eligibilite_absent?
+    eligibilite.to_s.empty?
   end
 end

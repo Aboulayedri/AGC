@@ -11,6 +11,7 @@
 #  created_at          :datetime
 #  updated_at          :datetime
 #  code                :string(255)
+#  etat                :string(255)
 #
 
 class Project < ActiveRecord::Base
@@ -19,6 +20,9 @@ class Project < ActiveRecord::Base
   validates :chef_id,             presence: { message: "Ne peut être vide" }
   validates :maitrise_ouvrage_id, presence: { message: "Ne peut être vide" }
   validates :code,                presence: { message: "Ne peut être vide" }
+  validates :etat,                presence: { message: "Ne peut être vide" }
+
+  scope :actives, -> { where etat: "activé" }
 
   belongs_to :domain
   belongs_to :chef,   class_name: "Collaborator"

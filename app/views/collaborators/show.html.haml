@@ -53,6 +53,27 @@
   = link_to "Modifier", "#collaborateur", class: 'btn', data: {toggle: "modal"}
   =# link_to "Supprimer", collaborator_path(@collaborator), :method => "delete", :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-danger'
 
+%h2 Historique des propositions
+%table.table.table-striped
+  %thead
+    %tr
+      %th Consultant
+      %th Date d'arrivée
+      %th Nombre de jours
+      %th Etat
+      %th Actions
+  %tbody
+    - @propositions.each do |proposal|
+      %tr
+        %td= proposal.consultant.name
+        %td= proposal.date
+        %td= proposal.nbre_jour
+        %td= proposal.etat
+        %td
+          = link_to "Consulter", proposal, :class => 'btn btn-mini'
+          = link_to "Modifier", edit_proposal_path(proposal), :class => 'btn btn-mini'
+          = link_to "Supprimer", proposal_path(proposal), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+
 - dialog_body = capture do
   = simple_form_for @collaborator, :html => { class: 'form-horizontal' } do |f|
     = f.input :nom

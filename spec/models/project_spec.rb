@@ -11,6 +11,7 @@
 #  created_at          :datetime
 #  updated_at          :datetime
 #  code                :string(255)
+#  etat                :string(255)
 #
 
 require 'spec_helper'

@@ -38,26 +38,26 @@
     = f.button :submit, :class => 'btn-primary'
     = link_to "Annuler", "#", :class => 'btn', id: "annuler_collaborateur"
 
-%h2 Propositions encours
-%table.table.table-striped
-  %thead
-    %tr
-      %th Consultant
-      %th Date d'arrivée
-      %th Nombre de jours
-      %th Etat
-      %th Actions
-  %tbody
-    - @propositions.each do |proposal|
-      %tr
-        %td= proposal.consultant.name
-        %td= proposal.date
-        %td= proposal.nbre_jour
-        %td= proposal.etat
-        %td
-          = link_to "Consulter", proposal, :class => 'btn btn-mini'
-          = link_to "Modifier", edit_proposal_path(proposal), :class => 'btn btn-mini'
-          = link_to "Supprimer", proposal_path(proposal), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+-# %h2 Propositions encours
+-# %table.table.table-striped
+-#   %thead
+-#     %tr
+-#       %th Consultant
+-#       %th Date d'arrivée
+-#       %th Nombre de jours
+-#       %th Etat
+-#       %th Actions
+-#   %tbody
+-#     - @propositions.each do |proposal|
+-#       %tr
+-#         %td= proposal.consultant.name
+-#         %td= proposal.date
+-#         %td= proposal.nbre_jour
+-#         %td= proposal.etat
+-#         %td
+-#           = link_to "Consulter", proposal, :class => 'btn btn-mini'
+-#           = link_to "Modifier", edit_proposal_path(proposal), :class => 'btn btn-mini'
+-#           = link_to "Supprimer", proposal_path(proposal), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
 
 %h2 Collaborateurs proposés à DRI
 %table.table.table-striped
@@ -76,7 +76,7 @@
         %td= collaborator.nom
         %td= collaborator.role
         %td= collaborator.eligibilite
-        %td= collaborator.aramis_entity.try(:name)
+        %td= collaborator.aramis_entity.name
         %td
           = link_to "Gérer", collaborator, :class => 'btn btn-mini'
           =# link_to "Supprimer", collaborator_path(collaborator), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
@@ -115,5 +115,4 @@
       $('#new_collaborator').slideUp("slow");
     });
     
-    $(".collaborateur:last").hide();
   });

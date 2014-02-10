@@ -37,7 +37,7 @@
             %td= proposal.consultant.entity.name
             %td= proposal.consultant.profil
             %td= proposal.nbre_jour
-            %td= f.association :project, label: false
+            %td= f.association :project, label: false, collection: Project.actives
             %td
               =# link_to "Reserver", "#proposition"+proposal.id.to_s, class: 'btn btn-mini', data: {toggle: "modal"}
               = f.submit "Réserver", class: "btn btn-mini action_form"
@@ -63,7 +63,7 @@
             %td= proposal.consultant.entity.name
             %td= proposal.consultant.profil
             %td= proposal.nbre_jour
-            %td= f.association :project, label: false
+            %td= f.association :project, label: false, collection: Project.actives
             %td= f.submit "Réserver", class: "btn btn-mini action_form"
 
 .table-responsive.minimiser

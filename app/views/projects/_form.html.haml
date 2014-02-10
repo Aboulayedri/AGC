@@ -4,6 +4,7 @@
   = f.association :chef, collection: Collaborator.consultants, prompt: "Sélectionner un collaborateur"
   = f.association :maitrise_ouvrage, label: "Maître d'ouvrage", collection: Collaborator.consultants, prompt: "Sélectionner un collaborateur"
   = f.input       :code
+  = f.input       :etat, collection: ["activé", "désactivé"]
   = f.input       :description
   .form-actions
     = f.submit "Mettre à jour", class: 'btn btn-primary'

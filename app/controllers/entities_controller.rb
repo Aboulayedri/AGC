@@ -23,9 +23,9 @@ class EntitiesController < ApplicationController
   # GET /entities/1
   # GET /entities/1.json
   def show
-    @propositions = Proposal.where(entity_id: @entity.id, date: Time.now.all_week)
+    #@propositions = Proposal.where(entity_id: @entity.id, date: Time.now.all_week)
     #@list = @entity.lists.new
-    @collaborateurs = @entity.collaborators
+    @collaborateurs = Collaborator.where(entity_id: @entity.id)
     @collaborator = @entity.collaborators.new
   end
 

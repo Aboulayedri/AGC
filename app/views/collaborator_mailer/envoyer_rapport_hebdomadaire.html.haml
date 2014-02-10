@@ -1,0 +1,144 @@
+!!! 5
+%html(lang="fr")
+  %head
+    %meta(charset="utf-8")
+  %body
+    %p
+      Bonjour
+      = @manager.prenom
+      ,
+    %p
+      Voici le reporting hebdomadaire de ton entité :
+      = @entity.name
+
+    %table
+      %caption
+        %h2 Les reconduits
+      %thead
+        %tr
+          %th Consultant
+          %th Entité ARAMIS
+          %th Projet
+          %th Commentaire
+      %tbody
+        - @reconduits.each do |reconduit|
+          %tr
+            %td= reconduit.consultant.name
+            %td= reconduit.consultant.aramis_entity.name
+            %td= reconduit.project.name
+            %td= reconduit.consultant.commentaire
+
+    %table
+      %caption
+        %h2 Les nouveaux
+      %thead
+        %tr
+          %th Consultant
+          %th Entité ARAMIS
+          %th Projet
+          %th Commentaire
+      %tbody
+        - @nouveaux.each do |nouveau|
+          %tr
+            %td= nouveau.consultant.name
+            %td= nouveau.consultant.aramis_entity.name
+            %td= nouveau.project.name
+            %td= nouveau.consultant.commentaire
+
+    %table
+      %caption
+        %h2 Changements de projets
+      %thead
+        %tr
+          %th Consultant
+          %th Entité ARAMIS
+          %th Projet
+          %th Ancien projet
+          %th Commentaire
+      %tbody
+        - @changement_projet.each do |proposal|
+          %tr
+            %td= proposal.consultant.name
+            %td= proposal.consultant.aramis_entity.name
+            %td= proposal.project.name
+            %td= Proposal.where("consultant_id = ? and project_id != ? and etat = ? and date >= ? and date <= ?", proposal.consultant_id, proposal.project_id, "arrivée", Time.now.beginning_of_week, Time.now.end_of_week).first.project.name
+            %td= proposal.consultant.commentaire
+
+    %table
+      %caption
+        %h2 Les retours
+      %thead
+        %tr
+          %th Consultant
+          %th Entité ARAMIS
+          %th Projet
+          %th Commentaire
+      %tbody
+        - @revenus.each do |proposal|
+          %tr
+            %td= proposal.consultant.name
+            %td= proposal.consultant.aramis_entity.name
+            %td= proposal.project.name
+            %td= proposal.consultant.commentaire
+
+    %table
+      %caption
+        %h2 Les départs
+      %thead
+        %tr
+          %th Consultant
+          %th Entité ARAMIS
+          %th Projet
+          %th Commentaire
+      %tbody
+        - @sortants.each do |proposal|
+          %tr
+            %td= proposal.consultant.name
+            %td= proposal.consultant.aramis_entity.name
+            %td= proposal.project.name
+            %td= proposal.consultant.commentaire
+
+    %table
+      %caption
+        %h2 Les attentes
+      %thead
+        %tr
+          %th Consultant
+          %th Entité ARAMIS
+          %th Projet
+          %th Précédent projet
+          %th Commentaire
+      %tbody
+        - @attentes.each do |proposal|
+          %tr
+            %td= proposal.consultant.name
+            %td= proposal.consultant.aramis_entity.name
+            %td=# proposal.project.name
+            %td= Proposal.where(consultant_id: proposal.consultant_id, etat: "arrivée").last.try(:project).try(:name)
+            %td= proposal.consultant.commentaire
+
+    %table
+      %caption
+        %h2 Consultants à éligibilité conditionnelle
+      %thead
+        %tr
+          %th Consultant
+          %th Entité ARAMIS
+          %th Projet
+          %th Précédent projet
+          %th Commentaire
+      %tbody
+        - @eligibilite_conditionnelle.each do |proposal|
+          %tr
+            %td= proposal.consultant.name
+            %td= proposal.consultant.aramis_entity.name
+            %td=# proposal.project.name
+            %td= Proposal.where(consultant_id: proposal.consultant_id, etat: "arrivée").last.try(:project).try(:name)
+            %td= proposal.consultant.commentaire
+
+    %p Je suis à ta disposition pour toute question.
+    %p
+      Cordialement,
+      %br
+      %strong
+        Olivier Rabilloud
