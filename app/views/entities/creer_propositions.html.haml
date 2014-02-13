@@ -40,13 +40,14 @@
 = link_to "Créer un Collaborateur", "#collaborateur", class: 'btn btn-info btn-mini', "data-toggle" => "modal"
 
 - dialog_body = capture do
-  = simple_form_for @entity.collaborators.new, :html => { class: 'form-horizontal' } do |f|
+  = simple_form_for @entity.collaborators.new, url: collaborators_path, :html => { class: 'form-horizontal' } do |f|
     = f.input :nom
     = f.input :prenom, label: "Prénom"
     = f.input :id_karma
     = f.input :profil
     = f.input :role, as: :hidden, input_html: {value: "consultant"}
     = f.input :email, placeholder: "prénom.nom@devoteam.com"
+    = f.input :password, as: :hidden, input_html: {value: "devoteam"}
     =# f.input :eligibilite, collection: ["éligible", "non-éligible"]
     = f.input :etat, as: :hidden, input_html: {value: "actif"}
     =# f.input :statut

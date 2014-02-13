@@ -1,4 +1,5 @@
 AGCDri::Application.routes.draw do
+  devise_for :collaborators
   resources :project_codes
 
   resources :aramis_entities
@@ -35,7 +36,7 @@ AGCDri::Application.routes.draw do
 
   resources :projects
 
-  resources :collaborators
+  resources :collaborators, path: "/gestion/collaborators"
 
   resources :domains
 

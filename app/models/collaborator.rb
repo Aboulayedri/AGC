@@ -23,6 +23,10 @@
 #
 
 class Collaborator < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
   validates :prenom,           presence: { message: "Ne peut être vide" }
   validates :nom,              presence: { message: "Ne peut être vide" }
   validates :etat,             presence: { message: "Ne peut être vide" }, inclusion: { in: %w(actif inactif), message: "%{value} n'est pas un état valide" }

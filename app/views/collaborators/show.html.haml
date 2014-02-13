@@ -75,7 +75,7 @@
           = link_to "Supprimer", proposal_path(proposal), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
 
 - dialog_body = capture do
-  = simple_form_for @collaborator, :html => { class: 'form-horizontal' } do |f|
+  = simple_form_for @collaborator, url: "/gestion/collaborators/#{@collaborator.id}", :html => { class: 'form-horizontal' } do |f|
     = f.input :nom
     = f.input :prenom, label: "Prénom"
     = f.input :id_karma
@@ -92,7 +92,7 @@
     =# f.association :manager, collection: proposal.consultant.entity.collaborators.managers, prompt: "Sélectionner le manager du consultant"
     = f.input :commentaire
     .form-actions
-      = f.submit "Mettre à jour Collaborateur", class: 'btn btn-primary'
+      = f.submit "Mettre à jour", class: 'btn btn-primary'
 = modal_dialog id: "collaborateur",
 header: { show_close: true, dismiss: 'modal', title: "Modification de "+@collaborator.name },
 body: dialog_body,

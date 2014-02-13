@@ -1,4 +1,10 @@
 .center.hero-unit
   %h1 Bienvenue sur AGC-DRI
   %h2 Ceci est la page d'accueil de l'application. Veuillez vous enregistrer pour commencer à utiliser l'application.
-  = link_to "Ouvrir un compte", "#", class: "btn btn-large btn-primary"
+  - if collaborator_signed_in?
+    = link_to "Se déconnecter", destroy_collaborator_session_path, class: "btn btn-large btn-info", method: :delete
+    %p= current_collaborator.name
+  - else
+    = link_to "Se connecter", new_collaborator_session_path, class: "btn btn-large btn-info"
+
+

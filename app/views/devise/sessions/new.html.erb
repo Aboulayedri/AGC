@@ -1,0 +1,15 @@
+<div class="page-header">
+  <h1>Connexion</h1>
+</div>
+
+<%= simple_form_for resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "form-horizontal well"} do |f| %>
+  <%= f.input :email, :required => false, :autofocus => true %>
+  <%= f.input :password, :required => false %>
+  <%= f.input :remember_me, :as => :boolean, label: "Se souvenir de moi" if devise_mapping.rememberable? %>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Se connecter" %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>

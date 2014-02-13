@@ -32,4 +32,6 @@ AGCDri::Application.configure do
     port:                 587,
     user_name:            'soumare1@hotmail.fr',
     password:             'nSuoGThndLE7Kr5nw1WIaQ' }
+  
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 end

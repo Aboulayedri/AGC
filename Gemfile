@@ -62,6 +62,9 @@ gem 'bcrypt-ruby', '3.1.2'
 gem 'faker', '1.1.2'
 gem 'jscrollpane-rails'
 
+gem 'devise'
+gem 'cancan'
+gem 'rolify'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
