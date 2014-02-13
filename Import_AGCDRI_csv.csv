@@ -1,0 +1,21 @@
+aramis_entity_id,nom,prenom,id_karma,profil,role,email,eligibilite,nat_diplome,niv_diplome,entity_id,password,etat
+5,MALKI,Mohammed,100934,Concepteur développeur Java J2E,consultant,mohammed.malki@devoteam.com,éligible,Scientifique,>= Bac + 3,1,devoteam,actif
+4,MOREAU,Rachel,1391,Consultante BI,consultant,rachel.moreau@devoteam.com,éligible,Scientifique,>= Bac + 3,1,devoteam,actif
+3,ORIANO,Yves,8112,Consultant MOA,consultant,yves.oriano@devoteam.com,éligible,Scientifique,>= Bac + 3,1,devoteam,actif
+6,RADJDI,Ahmed,102334,Concepteur développeur mobilité,consultant,ahmed.radjdi@devoteam.com,éligible,Scientifique,>= Bac + 3,1,devoteam,actif
+1,RAHOUI,Mohamed,7775,Concepteur développeur .Net/SQL,consultant,mohamed.rahoui@devoteam.com,éligible,Scientifique,>= Bac + 3,1,devoteam,actif
+6,REBUS,Vincent,105840,Concepteur développeur web et mobile,consultant,vincent.rebus@devoteam.com,éligible,Scientifique,>= Bac + 3,1,devoteam,actif
+3,SOIDIKI,Nadjimou,102771,Concepteur développeur web,consultant,nadjimou.soidiki@devoteam.com,éligible,Scientifique,>= Bac + 3,1,devoteam,actif
+2,SOUMARE,Abdoulaye,102335,Consultant urbaniste SI / Chef de projet MOA,consultant,abdoulaye.soumare@devoteam.com,éligible,Scientifique,>= Bac + 3,1,devoteam,actif
+7,CERVOISE,Antoine,104073,Consultant sécurité,consultant,antoine.cervoise@devoteam.com,éligible,Scientifique,>= Bac + 3,2,devoteam,actif
+7,CHARBONNEAU,Gregory,104038,Auditeur sécurité,consultant,gregory.charbonneau@devoteam.com,éligible,Scientifique,>= Bac + 3,2,devoteam,actif
+7,LE CALVEZ,Pierre,102178,Ingénieur sécurité,consultant,pierre.le.calvez@devoteam.com,éligible,Scientifique,>= Bac + 3,2,devoteam,actif
+7,GRANCHER,Alexis,105832,Consultant sécurité,consultant,alexis.grancher@devoteam.com,éligible,Scientifique,>= Bac + 3,2,devoteam,actif
+7,POMMIER,Thomas,103133,Consultant sécurité,consultant,thomas.pommier@devoteam.com,éligible,Scientifique,>= Bac + 3,4,devoteam,actif
+7,BERTOLI,Geoffrey,104797,Consultant sécurité,consultant,geoffrey.bertoli@devoteam.com,éligible,Scientifique,>= Bac + 3,2,devoteam,actif
+8,AUGER,Nicolas,4724,Chef de projet,consultant,nicolas.auger@devoteam.com,éligible,Scientifique,>= Bac + 3,3,devoteam,actif
+8,BOULANGER,Benoit,101412,Ingénieur système,consultant,benoit.boulanger@devoteam.com,éligible,Scientifique,>= Bac + 3,3,devoteam,actif
+8,GOETZ,Etienne,101999,Consultant senior sécurité / Directeur de projet,consultant,etienne.goetz@devoteam.com,éligible,Scientifique,>= Bac + 3,3,devoteam,actif
+8,LACOMBE,Dominique,3987,Consultant ITSE,consultant,dominique.lacombe@devoteam.com,Éligible-conditionnelle,Scientifique,Bac + 2,3,devoteam,actif
+8,MORNET,Daniel,102496,Administrateur système et reseaux,consultant,daniel.mornet@devoteam.com,éligible,Scientifique,>= Bac + 3,3,devoteam,actif
+8,RIGAUD,Francois Xavier,103032,Ingénieur système,consultant,francoisxavier.rigaud@devoteam.com,éligible,Scientifique,>= Bac + 3,3,devoteam,actif

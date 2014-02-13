@@ -5,6 +5,12 @@ class ListsController < ApplicationController
   # GET /lists.json
   def index
     @lists = List.all
+
+    require 'csv'
+
+    CSV.foreach("Import_AGCDRI_csv.csv", :headers => true) do |row|
+      Collaborator.create!(row.to_hash)
+    end
   end
 
   # GET /lists/1

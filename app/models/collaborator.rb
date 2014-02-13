@@ -41,7 +41,7 @@ class Collaborator < ActiveRecord::Base
   validates :etat,             presence: { message: "Ne peut être vide" }, inclusion: { in: %w(actif inactif), message: "%{value} n'est pas un état valide" }
   validates :email,            presence: { message: "Ne peut être vide" }
   validates :id_karma,         uniqueness: { message: "Déjà utilisé : un des collaborateurs enregistrés a ce numéro karma" }, allow_blank: true
-  validates :role,             presence: { message: "Ne peut être vide" }, inclusion: { in: %w(consultant manager manager_dri resp_domaine), message: "%{value} n'est pas un rôle valide" }
+  validates :role,             presence: { message: "Ne peut être vide" }, inclusion: { in: %w(admin consultant manager manager_dri resp_domaine staffeur), message: "%{value} n'est pas un rôle valide" }
   validates :entity_id,        presence: { message: "Ne peut être vide" }
   validates :aramis_entity_id, presence: { message: "Ne peut être vide" }
   validates :niv_diplome,      presence: { message: "Ne peut être vide si éligibilité saisie" }, unless: :eligibilite_absent?

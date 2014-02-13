@@ -3,14 +3,14 @@
   = f.input :prenom, label: "Prénom"
   = f.input :id_karma
   = f.input :profil
-  = f.input :role, label: "Rôle", collection: ["consultant", "manager", "manager_dri", "resp_domaine"]
+  = f.input :role, label: "Rôle", collection: ["admin", "consultant", "manager", "manager_dri", "resp_domaine", "staffeur"]
   = f.input :email, placeholder: "prénom.nom@devoteam.com"
-  = f.input :eligibilite, collection: ["éligible", "éligible-conditionnelle", "non-éligible"], prompt: "Sélectionner l'éligibilité du consultant"
+  = f.input :eligibilite, collection: ["éligible", "éligible-conditionnelle", "non-éligible"]
   = f.input :etat, collection: ["actif", "inactif"]
   -# = f.input :statut
   = f.input :niv_diplome, collection: [">= Bac + 3", "Bac + 2", "Autres"]
   = f.input :nat_diplome, collection: ["Autre", "Scientifique"]
-  = f.association :entity, prompt: "Sélectionner l'entité du collaborateur"
+  = f.association :entity
   = f.association :aramis_entity, label: "Entité Aramis"
   -# = f.association :manager, collection: Collaborator.managers, prompt: "Sélectionner le manager du consultant"
   = f.input :commentaire

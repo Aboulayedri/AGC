@@ -10,10 +10,10 @@
   = @project.domain.name
 %p
   %strong Chef :
-  = @project.chef.name
+  = @project.chef.try(:name)
 %p
   %strong Maîtrise d'ouvrage :
-  = @project.maitrise_ouvrage.name
+  = @project.maitrise_ouvrage.try(:name)
 %p
   %strong Code :
   = @project.code

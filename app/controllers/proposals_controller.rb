@@ -1,4 +1,5 @@
 class ProposalsController < ApplicationController
+  load_and_authorize_resource except: [:create]
   before_action :set_proposal, only: [:show, :edit, :update, :destroy, :reserver, :arriver, :liberer, :valider]
 
   # GET /proposals
@@ -56,6 +57,7 @@ class ProposalsController < ApplicationController
   # POST /proposals.json
   def create
     @proposal = Proposal.new(proposal_params)
+    authorize! :create, @proposal
 
     respond_to do |format|
       if @proposal.save

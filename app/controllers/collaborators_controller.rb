@@ -1,4 +1,6 @@
 class CollaboratorsController < ApplicationController
+  load_and_authorize_resource except: [:create]
+
   before_action :set_collaborator, only: [:show, :edit, :update, :destroy]
 
   # GET /collaborators
@@ -26,6 +28,7 @@ class CollaboratorsController < ApplicationController
   # POST /collaborators.json
   def create
     @collaborator = Collaborator.new(collaborator_params)
+    authorize! :create, @collaborator
 
     respond_to do |format|
       if @collaborator.save
