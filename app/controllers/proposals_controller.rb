@@ -7,7 +7,13 @@ class ProposalsController < ApplicationController
   def index
     #@proposals = Proposal.where(date: Time.now.next_week.all_week)
     @propositions = Proposal.a_traiter
-    @entites      = Entity.all
+    if current_collaborator.role == "staffeur"
+      @entites = Entity.all
+    elsif current_collaborator.role == "manager"
+      @entites = Entity.where(manager_id: current_collaborator.id)
+    else
+      @entites = []
+    end
   end
   
   # GET /affectations
@@ -29,6 +35,18 @@ class ProposalsController < ApplicationController
     propositions_presentes = Proposal.where(etat: "arrivée", date: Time.now.all_week)
     propositions_presentes.each do |proposition|
       @propositions_sortantes << proposition unless Proposal.where(consultant_id: proposition.consultant_id, date: Time.now.next_week.all_week).any?
+    end
+
+    # Pour faire les réservations
+    if current_collaborator.role == "staffeur"
+      @projets = Project.actives
+    elsif current_collaborator.role == "resp_domaine"
+      # @projets = Project.where(etat: "activé", domain_id: current_collaborator.domain.id)
+      @projets = Project.actives
+    elsif current_collaborator.role == "consultant"
+      @projets = Project.where(etat: "activé", chef_id: current_collaborator.id)
+    else
+      @projets = []
     end
   end  
   

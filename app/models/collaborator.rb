@@ -58,6 +58,7 @@ class Collaborator < ActiveRecord::Base
   belongs_to :manager,     class_name: "Collaborator"
   has_many   :consultants, class_name: "Collaborator", foreign_key: "manager_id"
   has_many   :proposals,   class_name: "Collaborator", foreign_key: "consultant_id"
+  has_one    :domain,      class_name: "Collaborator", foreign_key: "responsable_id"
 
   def name
     "#{nom} #{prenom}"

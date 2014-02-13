@@ -9,9 +9,25 @@ class Ability
         can :manage, :all
       elsif collaborator.role == "resp_domaine"
         can :manage, :all
-      else
+      elsif collaborator.role == "manager"
+        can :create, Proposal
+        can :destroy, Proposal
+        can :manage, Collaborator
+      elsif collaborator.role == "consultant"
+        can :gestion_affectations, Proposal
+        can :confirmation_affectations, Proposal
+        can :reserver, Proposal
+        can :arriver, Proposal
+        can :liberer, Proposal
+        can :read, [Proposal, Domain, Project]
+      elsif collaborator.role == "staffeur"
+        can :manage, Proposal
+        can :creer_propositions, Entity
+        can :envoyer_codes_imputation, :all
+        can :envoyer_rapport_hebdomadaire, :all
         can :read, :all
       end
+
     #
     # The first argument to `can` is the action you are giving the user 
     # permission to do.
