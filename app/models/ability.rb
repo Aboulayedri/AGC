@@ -7,6 +7,8 @@ class Ability
       collaborator ||= Collaborator.new # guest user (not logged in)
       if collaborator.role == "admin"
         can :manage, :all
+      elsif collaborator.role == "resp_domaine"
+        can :manage, :all
       else
         can :read, :all
       end
