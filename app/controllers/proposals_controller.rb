@@ -39,7 +39,7 @@ class ProposalsController < ApplicationController
 
     # Pour faire les réservations
     @projets = []
-    if current_collaborator.role == "staffeur"
+    if current_collaborator.role == "staffeur" or current_collaborator.role == "admin"
       @projets = Project.actives
     elsif current_collaborator.role == "resp_domaine"
       Domain.where(responsable_id: current_collaborator.id).each do |domain|
