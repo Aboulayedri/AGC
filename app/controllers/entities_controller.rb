@@ -75,7 +75,9 @@ class EntitiesController < ApplicationController
   def envoyer_reportings
     # pour chaque entité, on envoie le reporting
     Entity.all.each do |entity|
-      CollaboratorMailer.envoyer_rapport_hebdomadaire(entity).deliver
+      - if !entity.manager.nil? # Si l'entité a un manager
+        CollaboratorMailer.envoyer_rapport_hebdomadaire(entity).deliver
+      end
     end
     redirect_to :back, notice: "Les rapports ont été envoyés aux managers des différentes entités"
   end

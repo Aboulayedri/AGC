@@ -7,7 +7,7 @@ class ProposalsController < ApplicationController
   def index
     #@proposals = Proposal.where(date: Time.now.next_week.all_week)
     @propositions = Proposal.a_traiter
-    if current_collaborator.role == "staffeur"
+    if current_collaborator.role == "staffeur" or current_collaborator.role == "admin"
       @entites = Entity.all
     elsif current_collaborator.role == "manager"
       @entites = Entity.where(manager_id: current_collaborator.id)
