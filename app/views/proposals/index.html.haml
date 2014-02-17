@@ -22,22 +22,28 @@
         %td= proposal.nbre_jour
         %td= proposal.consultant.eligibilite
         %td
-          = link_to "Modifier Collaborateur","#collaborateur"+proposal.consultant.id.to_s, class: "btn btn-mini fonction", data: {toggle: "modal"}
-          = link_to "Annuler", proposal_path(proposal), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger fonction'
+          - if can? :destroy, proposal
+            = link_to "Annuler", proposal_path(proposal), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger fonction'
+          - if proposal.consultant.eligibilite.to_s.empty?
+            - if can? :update, proposal.consultant
+              = link_to "Modifier Collaborateur","#collaborateur"+proposal.consultant.id.to_s, class: "btn btn-mini fonction", data: {toggle: "modal"}
 
 - afficher = true
 - if Proposal.a_traiter.any? and Proposal.last.etat != "créée"
   - afficher = false
 
 - if afficher
-  .btn-group
-    %a{class: "btn btn-info dropdown-toggle btn-mini", data: {toggle: "dropdown"}, href: "#"}
-      Créer Une Proposition
-      %span.caret
-    %ul.dropdown-menu
-      - @entites.each do |entite|
-        %li= link_to entite.name, creer_propositions_entity_path(entite)
-  = link_to "Publier Propositions", publier_proposals_path, class: "btn btn-info btn-mini"
+  - if can? :creer_propositions, Entity
+    .btn-group
+      %a{class: "btn btn-info dropdown-toggle btn-mini", data: {toggle: "dropdown"}, href: "#"}
+        Créer Une Proposition
+        %span.caret
+      %ul.dropdown-menu
+        - @entites.each do |entite|
+          %li= link_to entite.name, creer_propositions_entity_path(entite)
+  - if Proposal.a_traiter.any?
+    - if can? :publier, Proposal
+      = link_to "Publier Propositions", publier_proposals_path, class: "btn btn-info btn-mini"
 
 - @propositions.each do |proposal|
   - dialog_body = capture do

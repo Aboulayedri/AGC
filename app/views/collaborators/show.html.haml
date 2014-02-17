@@ -50,7 +50,8 @@
 
 .form-actions
   = link_to "Retour", @collaborator.entity, class: 'btn'
-  = link_to "Modifier", "#collaborateur", class: 'btn', data: {toggle: "modal"}
+  - if can? :update, @collaborator
+    = link_to "Modifier", "#collaborateur", class: 'btn', data: {toggle: "modal"}
   =# link_to "Supprimer", collaborator_path(@collaborator), :method => "delete", :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-danger'
 
 %h2 Historique des propositions

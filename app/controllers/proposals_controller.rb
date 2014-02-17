@@ -38,15 +38,18 @@ class ProposalsController < ApplicationController
     end
 
     # Pour faire les réservations
+    @projets = []
     if current_collaborator.role == "staffeur"
       @projets = Project.actives
     elsif current_collaborator.role == "resp_domaine"
-      # @projets = Project.where(etat: "activé", domain_id: current_collaborator.domain.id)
-      @projets = Project.actives
+      Domain.where(responsable_id: current_collaborator.id).each do |domain|
+        @projets_dom = Project.where(etat: "activé", domain_id: domain.id)
+        @projets_dom.each do |projet|
+          @projets << projet
+        end
+      end
     elsif current_collaborator.role == "consultant"
       @projets = Project.where(etat: "activé", chef_id: current_collaborator.id)
-    else
-      @projets = []
     end
   end  
   

@@ -14,8 +14,10 @@
 
 .form-actions
   = link_to "Retour", entities_path, :class => 'btn'
-  = link_to "Modifier", edit_entity_path(@entity), :class => 'btn'
-  = link_to "Supprimer", entity_path(@entity), :method => "delete", :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-danger'
+  - if can? :update, @entity
+    = link_to "Modifier", edit_entity_path(@entity), :class => 'btn'
+  - if can? :destroy, @entity
+    = link_to "Supprimer", entity_path(@entity), :method => "delete", :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-danger'
   =# link_to "Nouveau Collaborateur","#", class: "btn btn-primary", id: "nouv_collaborateur"
   =# link_to "Proposer des consultants","#", class: "btn btn-primary", id: "nouv_propositions"
 
@@ -80,8 +82,8 @@
         %td= collaborator.etat
         %td= collaborator.aramis_entity.name
         %td
-          = link_to "Gérer", collaborator, :class => 'btn btn-mini'
-          =# link_to "Supprimer", collaborator_path(collaborator), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+          - if can? :read, collaborator
+            = link_to "Gérer", collaborator, :class => 'btn btn-mini'
 
 :javascript
   $(".datepicker").datepicker({

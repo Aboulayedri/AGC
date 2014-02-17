@@ -10,7 +10,10 @@
       %tr
         %td= project_code.name
         %td
-          = link_to "Gérer", project_code, class: 'btn btn-mini'
-          = link_to "Supprimer", project_code_path(project_code), method: :delete, data: { confirm: "Êtes-vous sûr ?" }, class: 'btn btn-mini btn-danger'
+          - if can? :read, project_code
+            = link_to "Gérer", project_code, class: 'btn btn-mini'
+          - if can? :destroy, project_code
+            = link_to "Supprimer", project_code_path(project_code), method: :delete, data: { confirm: "Êtes-vous sûr ?" }, class: 'btn btn-mini btn-danger'
 
-= link_to "Nouveau Code Projets", new_project_code_path, class: 'btn btn-info'
+- if can? :create, ProjectCode
+  = link_to "Nouveau Code Projets", new_project_code_path, class: 'btn btn-info'

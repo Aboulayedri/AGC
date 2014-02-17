@@ -13,7 +13,10 @@
         %td= entity.name
         %td= entity.manager.try(:name)
         %td
-          = link_to "Gérer", entity, :class => 'btn btn-mini'
-          = link_to "Supprimer", entity_path(entity), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+          - if can? :read, entity
+            = link_to "Gérer", entity, :class => 'btn btn-mini'
+          - if can? :destroy, entity
+            = link_to "Supprimer", entity_path(entity), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
 
-= link_to "Nouvelle Entité", new_entity_path, :class => 'btn btn-info'
+- if can? :create, Entity
+  = link_to "Nouvelle Entité", new_entity_path, :class => 'btn btn-info'

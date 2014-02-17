@@ -8,26 +8,54 @@ class Ability
       if collaborator.role == "admin"
         can :manage, :all
       elsif collaborator.role == "resp_domaine"
-        can :manage, :all
+        can :manage, Domain, responsable_id: collaborator.id
+        cannot :create, Domain
+        can :manage, Project, domain: {responsable_id: collaborator.id}
+        can :read, Collaborator
+        can :gestion_affectations, Proposal
+        can :confirmation_affectations, Proposal
+        cannot :valider, Proposal
+        cannot :liberer, Proposal
+        cannot :arriver, Proposal
+        can :reserver, Proposal
+        can :liberer, Proposal do |proposal|
+          proposal.project.domain.responsable_id == collaborator.id
+        end
+        can :arriver, Proposal do |proposal|
+          proposal.project.domain.responsable_id == collaborator.id
+        end
       elsif collaborator.role == "manager"
-        can :create, Proposal
-        can :destroy, Proposal
-        can :manage, Collaborator
+        can :manage, Entity, manager_id: collaborator.id
+        cannot :create, Entity
+        can :manage, Proposal, entity: {manager_id: collaborator.id}
+        cannot :gestion_affectations, Proposal
+        cannot :confirmation_affectations, Proposal
+        cannot :publier, Proposal
+        can :manage, Collaborator, entity: {manager_id: collaborator.id}
       elsif collaborator.role == "consultant"
+        can :read, Collaborator
         can :gestion_affectations, Proposal
         can :confirmation_affectations, Proposal
         can :reserver, Proposal
-        can :arriver, Proposal
-        can :liberer, Proposal
-        can :read, [Proposal, Domain, Project]
+        can :arriver, Proposal, project: { chef_id: collaborator.id }
+        can :read, Proposal, project: { chef_id: collaborator.id }
+        cannot :index, Proposal
+        cannot :valider, Proposal
+        cannot :liberer, Proposal
+        can :liberer, Proposal, project: { chef_id: collaborator.id }
+        can :read, Domain
+        can :read, Project, chef_id: collaborator.id
+        can :read, Project, maitrise_ouvrage_id: collaborator.id
       elsif collaborator.role == "staffeur"
         can :manage, Proposal
         can :creer_propositions, Entity
         can :envoyer_codes_imputation, :all
         can :envoyer_rapport_hebdomadaire, :all
+        can :manage, Collaborator
         can :read, :all
       end
-
+      
+      cannot :destroy, [Collaborator, Project, Domain, ProjectCode, AramisEntity, Entity]
     #
     # The first argument to `can` is the action you are giving the user 
     # permission to do.

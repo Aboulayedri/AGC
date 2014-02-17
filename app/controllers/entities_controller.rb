@@ -1,10 +1,11 @@
 class EntitiesController < ApplicationController
+  load_and_authorize_resource except: [:create]
   before_action :set_entity, only: [:show, :edit, :update, :destroy, :creer_propositions]
 
   # GET /entities
   # GET /entities.json
   def index
-    @entities = Entity.all
+    @entities = Entity.accessible_by(current_ability)
   end
 
   # GET /entities/1/creer_propositions
@@ -42,6 +43,7 @@ class EntitiesController < ApplicationController
   # POST /entities.json
   def create
     @entity = Entity.new(entity_params)
+    authorize! :create, @entity
 
     respond_to do |format|
       if @entity.save

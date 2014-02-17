@@ -1,4 +1,5 @@
 class AramisEntitiesController < ApplicationController
+  load_and_authorize_resource except: [:create]
   before_action :set_aramis_entity, only: [:show, :edit, :update, :destroy]
 
   # GET /aramis_entities
@@ -26,6 +27,7 @@ class AramisEntitiesController < ApplicationController
   # POST /aramis_entities.json
   def create
     @aramis_entity = AramisEntity.new(aramis_entity_params)
+    authorize! :create, @aramis_entity
 
     respond_to do |format|
       if @aramis_entity.save

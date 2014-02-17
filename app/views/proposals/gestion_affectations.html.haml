@@ -83,17 +83,31 @@
           %td= proposal.consultant.profil
           %td= proposal.project.name
           %td
-            = link_to "Libérer", liberer_proposal_path(proposal), :class => 'btn btn-mini fonction'
-            = link_to "Valider", valider_proposal_path(proposal), :class => 'btn btn-mini fonction'
+            - if can? :liberer, proposal
+              = link_to "Libérer", liberer_proposal_path(proposal), :class => 'btn btn-mini fonction'
+            - if can? :valider, proposal
+              = link_to "Valider", valider_proposal_path(proposal), :class => 'btn btn-mini fonction'
 
 - @propositions_sortantes.each do |proposal|
   - dialog_body = capture do
     %p
+      %strong Id Karma:
+      = proposal.consultant.id_karma
+    %p
       %strong Profil :
       = proposal.consultant.profil
     %p
+      %strong Rôle :
+      = proposal.consultant.role
+    %p
+      %strong Email :
+      = proposal.consultant.email
+    %p
       %strong Eligibilité :
       = proposal.consultant.eligibilite
+    %p
+      %strong Etat :
+      = proposal.consultant.etat
     %p
       %strong Niveau de diplôme :
       = proposal.consultant.niv_diplome
@@ -103,19 +117,40 @@
     %p
       %strong Entité :
       = proposal.consultant.entity.name
+    %p
+      %strong Entité Aramis :
+      = proposal.consultant.aramis_entity.name
+    %p
+      %strong Manager :
+      = proposal.consultant.entity.manager.name
+    %p
+      %strong Commentaire :
+      = proposal.consultant.commentaire
   = modal_dialog id: "modal"+proposal.consultant_id.to_s,
-  header: { title: proposal.consultant.name },
+  header: { show_close: true, dismiss: 'modal', title: proposal.consultant.name },
   body: dialog_body,
   footer: content_tag(:button, 'Fermer', class: 'btn', "data-dismiss" => "modal")
 
 - @propositions_disponibles.each do |proposal|
   - dialog_body = capture do
     %p
+      %strong Id Karma:
+      = proposal.consultant.id_karma
+    %p
       %strong Profil :
       = proposal.consultant.profil
     %p
+      %strong Rôle :
+      = proposal.consultant.role
+    %p
+      %strong Email :
+      = proposal.consultant.email
+    %p
       %strong Eligibilité :
       = proposal.consultant.eligibilite
+    %p
+      %strong Etat :
+      = proposal.consultant.etat
     %p
       %strong Niveau de diplôme :
       = proposal.consultant.niv_diplome
@@ -125,19 +160,40 @@
     %p
       %strong Entité :
       = proposal.consultant.entity.name
+    %p
+      %strong Entité Aramis :
+      = proposal.consultant.aramis_entity.name
+    %p
+      %strong Manager :
+      = proposal.consultant.entity.manager.name
+    %p
+      %strong Commentaire :
+      = proposal.consultant.commentaire
   = modal_dialog id: "modal"+proposal.consultant_id.to_s,
-  header: { title: proposal.consultant.name },
+  header: { show_close: true, dismiss: 'modal', title: proposal.consultant.name },
   body: dialog_body,
   footer: content_tag(:button, 'Fermer', class: 'btn', "data-dismiss" => "modal")
 
 - @propositions_non_eligibles.each do |proposal|
   - dialog_body = capture do
     %p
+      %strong Id Karma:
+      = proposal.consultant.id_karma
+    %p
       %strong Profil :
       = proposal.consultant.profil
     %p
+      %strong Rôle :
+      = proposal.consultant.role
+    %p
+      %strong Email :
+      = proposal.consultant.email
+    %p
       %strong Eligibilité :
       = proposal.consultant.eligibilite
+    %p
+      %strong Etat :
+      = proposal.consultant.etat
     %p
       %strong Niveau de diplôme :
       = proposal.consultant.niv_diplome
@@ -147,19 +203,40 @@
     %p
       %strong Entité :
       = proposal.consultant.entity.name
+    %p
+      %strong Entité Aramis :
+      = proposal.consultant.aramis_entity.name
+    %p
+      %strong Manager :
+      = proposal.consultant.entity.manager.name
+    %p
+      %strong Commentaire :
+      = proposal.consultant.commentaire
   = modal_dialog id: "modal"+proposal.consultant_id.to_s,
-  header: { title: proposal.consultant.name },
+  header: { show_close: true, dismiss: 'modal', title: proposal.consultant.name },
   body: dialog_body,
   footer: content_tag(:button, 'Fermer', class: 'btn', "data-dismiss" => "modal")
 
 - @propositions_reservees.each do |proposal|
   - dialog_body = capture do
     %p
+      %strong Id Karma:
+      = proposal.consultant.id_karma
+    %p
       %strong Profil :
       = proposal.consultant.profil
     %p
+      %strong Rôle :
+      = proposal.consultant.role
+    %p
+      %strong Email :
+      = proposal.consultant.email
+    %p
       %strong Eligibilité :
       = proposal.consultant.eligibilite
+    %p
+      %strong Etat :
+      = proposal.consultant.etat
     %p
       %strong Niveau de diplôme :
       = proposal.consultant.niv_diplome
@@ -169,8 +246,17 @@
     %p
       %strong Entité :
       = proposal.consultant.entity.name
+    %p
+      %strong Entité Aramis :
+      = proposal.consultant.aramis_entity.name
+    %p
+      %strong Manager :
+      = proposal.consultant.entity.manager.name
+    %p
+      %strong Commentaire :
+      = proposal.consultant.commentaire
   = modal_dialog id: "modal"+proposal.consultant_id.to_s,
-  header: { title: proposal.consultant.name },
+  header: { show_close: true, dismiss: 'modal', title: proposal.consultant.name },
   body: dialog_body,
   footer: content_tag(:button, 'Fermer', class: 'btn', "data-dismiss" => "modal")
 

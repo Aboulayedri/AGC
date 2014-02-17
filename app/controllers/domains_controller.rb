@@ -1,10 +1,11 @@
 class DomainsController < ApplicationController
+  load_and_authorize_resource except: [:create]
   before_action :set_domain, only: [:show, :edit, :update, :destroy]
 
   # GET /domains
   # GET /domains.json
   def index
-    @domains = Domain.all
+    @domains = Domain.accessible_by(current_ability)
   end
 
   # GET /domains/1
@@ -26,6 +27,7 @@ class DomainsController < ApplicationController
   # POST /domains.json
   def create
     @domain = Domain.new(domain_params)
+    authorize! :create, @domain
 
     respond_to do |format|
       if @domain.save

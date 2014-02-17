@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  load_and_authorize_resource except: [:create]
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   # GET /projects
@@ -25,6 +26,7 @@ class ProjectsController < ApplicationController
   # POST /projects.json
   def create
     @project = Project.new(project_params)
+    authorize! :create, @project
 
     respond_to do |format|
       if @project.save

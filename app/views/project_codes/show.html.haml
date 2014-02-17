@@ -8,9 +8,12 @@
 
 .form-actions
   = link_to "Retour", project_codes_path, class: 'btn'
-  = link_to "Modifier", edit_project_code_path(@project_code), class: 'btn'
-  = link_to "Supprimer", project_code_path(@project_code), method: "delete", data: { confirm: "Êtes-vous sûr ?" }, class: 'btn btn-danger'
-  = link_to "Nouvelle Entité Aramis", "#aramis_entity", class: 'btn btn-info', data: {toggle: "modal"}
+  - if can? :update, @project_code
+    = link_to "Modifier", edit_project_code_path(@project_code), class: 'btn'
+  - if can? :destroy, @project_code
+    = link_to "Supprimer", project_code_path(@project_code), method: "delete", data: { confirm: "Êtes-vous sûr ?" }, class: 'btn btn-danger'
+  - if can? :create, AramisEntity
+    = link_to "Nouvelle Entité Aramis", "#aramis_entity", class: 'btn btn-info', data: {toggle: "modal"}
 
 %h2 Liste des Entités Aramis du Code Projets
 %table.table.table-striped
@@ -23,8 +26,10 @@
       %tr
         %td= aramis_entity.name
         %td
-          = link_to "Gérer", aramis_entity, class: "btn btn-mini"
-          = link_to "Supprimer", aramis_entity_path(aramis_entity), method: :delete, data: { confirm: "Êtes-vous sûr ?" }, class: 'btn btn-mini btn-danger'
+          - if can? :read, aramis_entity
+            = link_to "Gérer", aramis_entity, class: "btn btn-mini"
+          - if can? :destroy, aramis_entity
+            = link_to "Supprimer", aramis_entity_path(aramis_entity), method: :delete, data: { confirm: "Êtes-vous sûr ?" }, class: 'btn btn-mini btn-danger'
 
 - dialog_body = capture do
   = simple_form_for @project_code.aramis_entities.new, html: { class: 'form-horizontal' } do |f|

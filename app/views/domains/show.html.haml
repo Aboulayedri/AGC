@@ -14,9 +14,12 @@
 
 .form-actions
   = link_to "Retour", domains_path, class: 'btn'
-  = link_to "Modifier", edit_domain_path(@domain), :class => 'btn'
-  = link_to "Supprimer", domain_path(@domain), :method => "delete", :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-danger'
-  = link_to "Nouveau Projet", "#", class: "btn btn-info", id: "nouv_projet"
+  - if can? :update, @domain
+    = link_to "Modifier", edit_domain_path(@domain), :class => 'btn'
+  - if can? :destroy, @domain
+    = link_to "Supprimer", domain_path(@domain), :method => "delete", :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-danger'
+  - if can? :create, Project
+    = link_to "Nouveau Projet", "#", class: "btn btn-info", id: "nouv_projet"
 
 = simple_form_for @project, html: { class: 'form-horizontal well' } do |f|
   = f.input :name, label: "Nom"
@@ -47,9 +50,8 @@
         %td= project.maitrise_ouvrage.try(:name)
         %td= project.etat
         %td
-          = link_to "Gérer", project, :class => 'btn btn-mini'
-          =# link_to "Modifier", edit_project_path(project), :class => 'btn btn-mini'
-          =# link_to "Supprimer", project_path(project), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+          - if can? :read, project
+            = link_to "Gérer", project, :class => 'btn btn-mini'
 
 :javascript
   $(document).ready(function() {

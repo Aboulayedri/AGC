@@ -20,7 +20,8 @@
         %td= proposal.date
         %td= proposal.nbre_jour
         %td
-          = link_to "Annuler", proposal_path(proposal), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger fonction'
+          - if can? :destroy, proposal
+            = link_to "Annuler", proposal_path(proposal), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger fonction'
 
 %table.table.table-striped.table-condensed.minimiser
   %caption
@@ -36,8 +37,8 @@
           %td= f.input       :date,       label: false, input_html: { value: Time.now.to_date.next_week}, placeholder: "Date d'arrivée", as: :string
           %td= f.input       :nbre_jour,  label: false, placeholder: "Nb jours"
           %td= f.submit "Proposer", class: 'btn btn-mini'
-
-= link_to "Créer un Collaborateur", "#collaborateur", class: 'btn btn-info btn-mini', "data-toggle" => "modal"
+- if can? :create, Collaborator
+  = link_to "Créer un Collaborateur", "#collaborateur", class: 'btn btn-info btn-mini', "data-toggle" => "modal"
 
 - dialog_body = capture do
   = simple_form_for @entity.collaborators.new, url: collaborators_path, :html => { class: 'form-horizontal' } do |f|
