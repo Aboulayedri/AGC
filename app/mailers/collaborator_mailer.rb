@@ -7,6 +7,11 @@ class CollaboratorMailer < ActionMailer::Base
     mail(to: "#{@consultant.name} <#{@consultant.email}>", subject: "DRI : Codes ARAMIS")
   end
 
+  def prevenir_responsable(domain)
+    @responsable = domain.responsable
+    mail(to: "#{@responsable.name} <#{@responsable.email}>", subject: "Ouverture des sélections")
+  end
+
   def envoyer_rapport_hebdomadaire(entity)
     @entity = entity
     @manager = entity.manager

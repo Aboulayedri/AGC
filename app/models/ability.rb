@@ -43,7 +43,9 @@ class Ability
         cannot :valider, Proposal
         cannot :liberer, Proposal
         can :liberer, Proposal, project: { chef_id: collaborator.id }
-        can :read, Domain
+        can :read, Domain # do |domain|
+          # Project.where(domain_id: domain.id, chef_id: collaborator.id).any?
+        # end
         can :read, Project, chef_id: collaborator.id
         can :read, Project, maitrise_ouvrage_id: collaborator.id
       elsif collaborator.role == "staffeur"

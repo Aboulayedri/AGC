@@ -105,7 +105,14 @@ class ProposalsController < ApplicationController
        proposition.publier
        proposition.reconduire unless !proposition.present?
      end
-     redirect_to affectations_path, notice: "Les propositions ont été publiées"
+
+     Domain.all.each do |domain|
+       if !domain.responsable.nil? # Si le domain a un responsable
+         CollaboratorMailer.prevenir_responsable(domain).deliver
+       end
+     end
+
+     redirect_to affectations_path, notice: "Les propositions ont été publiées et les responsables de domaines sont prévenus"
    else
      redirect_to :back, alert: "La publication n'est pas permise car il y a des profils non-validés"
    end
