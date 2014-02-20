@@ -1,7 +1,8 @@
 .page-header
   %h1 
     Confirmation des affectations
-    = Time.now.next_week.next_week.strftime("S%W %Y")
+    = Time.now.next_week.strftime("S%W %Y")
+    , Semaine encours
 
 .table-responsive.minimiser
   %table.table.table-striped.table-condensed.well
@@ -17,8 +18,9 @@
         %tr
           %td= link_to proposal.consultant.name, "#modal"+proposal.consultant_id.to_s, "data-toggle" => 'modal'
           %td= proposal.project.name
-          - if can? :arriver, proposal
-            %td= link_to "Arriver", arriver_proposal_path(proposal), class: 'btn btn-mini fonction'
+          %td
+            - if can? :arriver, proposal
+              = link_to "Arriver", arriver_proposal_path(proposal), class: 'btn btn-mini fonction'
 
 - @propositions_validees.each do |proposal|
   - dialog_body = capture do

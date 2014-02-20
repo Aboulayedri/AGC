@@ -43,6 +43,12 @@
           .span3
             .well.sidebar-nav
               %ul.nav.nav-list
+                %li.nav-header
+                  = current_collaborator.name
+                  (
+                  = current_collaborator.role
+                  )
+              %ul.nav.nav-list
                 %li.nav-header Les actions
                 - if can? :index, Proposal
                   %li= link_to "Gérer les propositions", proposals_path
@@ -53,7 +59,8 @@
                 %li=# link_to "Gérer les entités aramis", aramis_entities_path
                 - if can? :read, Domain
                   %li= link_to "Gérer les domaines", domains_path
-                %li=# link_to "Gérer les collaborateurs", collaborators_path
+                - if can? :update, Collaborator
+                  %li= link_to "Gérer les collaborateurs", collaborators_path
                 %li=# link_to "Gérer les projets", projects_path
                 - if can? :gestion_affectations, Proposal
                   %li= link_to "Gérer les affectations", affectations_path

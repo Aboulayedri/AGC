@@ -1,3 +1,4 @@
+require "prawn"
 class ProjectsController < ApplicationController
   load_and_authorize_resource except: [:create]
   before_action :set_project, only: [:show, :edit, :update, :destroy]
@@ -11,6 +12,19 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.pdf { render pdf: generate_pdf(@project) }
+    end
+  end
+
+  def generate_pdf(project)
+    Prawn::Document.new do
+      text project.name, align: :center
+      text "Chef: #{project.chef.name}"
+      text "Maitre d'ouvrage: #{project.maitrise_ouvrage.name}"
+      text "Description: #{project.description}"
+    end.render
   end
 
   # GET /projects/new

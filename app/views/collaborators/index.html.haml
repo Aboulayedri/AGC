@@ -4,21 +4,50 @@
 %table.table.table-striped
   %thead
     %tr
-      %th Prénom
-      %th Nom
+      %th Consultant
+      %th Entité
+      %th Entité Aramis
       %th Rôle
       %th Etat
       %th Actions
   %tbody
     - @collaborators.each do |collaborator|
       %tr
-        %td= collaborator.prenom
-        %td= collaborator.nom
+        %td= collaborator.name
+        %td= collaborator.entity.name
+        %td= collaborator.aramis_entity.name
         %td= collaborator.role
         %td= collaborator.etat
         %td
-          = link_to "Consulter", collaborator, :class => 'btn btn-mini'
-          = link_to "Modifier", edit_collaborator_path(collaborator), :class => 'btn btn-mini'
-          = link_to "Supprimer", collaborator_path(collaborator), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+          - if can? :update, collaborator
+            = link_to "Modifier","#collaborateur"+collaborator.id.to_s, class: "btn btn-mini", data: {toggle: "modal"}
+          -# = link_to "Consulter", collaborator, :class => 'btn btn-mini'
+          -# = link_to "Modifier", edit_collaborator_path(collaborator), :class => 'btn btn-mini'
+          -# = link_to "Supprimer", collaborator_path(collaborator), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
 
-= link_to "Nouveau Collaborateur", new_collaborator_path, :class => 'btn btn-primary'
+-# = link_to "Nouveau Collaborateur", new_collaborator_path, :class => 'btn btn-primary'
+
+- @collaborators.each do |collaborator|
+  - dialog_body = capture do
+    = simple_form_for collaborator, url: "/gestion/collaborators/#{collaborator.id}", :html => { class: 'form-horizontal' } do |f|
+      = f.input :nom
+      = f.input :prenom, label: "Prénom"
+      = f.input :id_karma
+      = f.input :profil
+      = f.input :role, label: "Rôle", collection: ["admin", "consultant", "manager", "manager_dri", "resp_domaine", "staffeur"]
+      = f.input :email, placeholder: "prénom.nom@devoteam.com"
+      = f.input :eligibilite, collection: ["éligible", "éligible-conditionnelle", "non-éligible"]
+      = f.input :etat, collection: ["actif", "inactif"]
+      =# f.input :statut
+      = f.input :niv_diplome, collection: [">= Bac + 3", "Bac + 2", "Autres"]
+      = f.input :nat_diplome, collection: ["Autre", "Scientifique"]
+      = f.association :entity, label: "Entité"
+      = f.association :aramis_entity, label: "Entité Aramis"
+      =# f.association :manager, collection: proposal.consultant.entity.collaborators.managers, prompt: "Sélectionner le manager du consultant"
+      = f.input :commentaire
+      .form-actions
+        = f.submit "Mettre à jour", class: 'btn btn-primary'
+  = modal_dialog id: "collaborateur"+collaborator.id.to_s,
+  header: { show_close: true, dismiss: 'modal', title: "Modification de "+collaborator.name },
+  body: dialog_body,
+  footer: content_tag(:button, 'Annuler', class: 'btn', "data-dismiss" => "modal")

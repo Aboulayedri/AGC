@@ -3,6 +3,7 @@
   %h1 
     Propositions
     = Time.now.next_week.next_week.strftime("S%W %Y")
+    = Time.now.next_week.strftime(", Date : %d/%m/%Y")
 
 %table.table.table-striped.table-condensed.minimiser.well
   %thead

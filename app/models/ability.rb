@@ -7,6 +7,8 @@ class Ability
       collaborator ||= Collaborator.new # guest user (not logged in)
       if collaborator.role == "admin"
         can :manage, :all
+      elsif collaborator.role == "manager_dri"
+        can :manage, :all
       elsif collaborator.role == "resp_domaine"
         can :manage, Domain, responsable_id: collaborator.id
         cannot :create, Domain
@@ -32,7 +34,7 @@ class Ability
         cannot :confirmation_affectations, Proposal
         cannot :publier, Proposal
         can :manage, Collaborator, entity: {manager_id: collaborator.id}
-      elsif collaborator.role == "consultant"
+      elsif collaborator.role == "consultant" and Project.where(chef_id: collaborator.id).any? or Project.where(maitrise_ouvrage_id: collaborator.id).any?
         can :read, Collaborator
         can :gestion_affectations, Proposal
         can :confirmation_affectations, Proposal
