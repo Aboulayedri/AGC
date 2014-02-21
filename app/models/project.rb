@@ -23,6 +23,7 @@ class Project < ActiveRecord::Base
   validates :etat,                presence: { message: "Ne peut être vide" }
 
   scope :actives, -> { where etat: "activé" }
+  default_scope { order :name }
 
   belongs_to :domain
   belongs_to :chef,   class_name: "Collaborator"

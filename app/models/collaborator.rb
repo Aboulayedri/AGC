@@ -41,13 +41,13 @@ class Collaborator < ActiveRecord::Base
   validates :etat,             presence: { message: "Ne peut être vide" }, inclusion: { in: %w(actif inactif), message: "%{value} n'est pas un état valide" }
   validates :email,            presence: { message: "Ne peut être vide" }
   validates :id_karma,         uniqueness: { message: "Déjà utilisé : un des collaborateurs enregistrés a ce numéro karma" }, allow_blank: true
-  validates :role,             presence: { message: "Ne peut être vide" }, inclusion: { in: %w(admin consultant manager manager_dri resp_domaine staffeur), message: "%{value} n'est pas un rôle valide" }
+  validates :role,             presence: { message: "Ne peut être vide" }, inclusion: { in: %w(admin consultant manager_dri manager_dvt resp_domaine staffeur), message: "%{value} n'est pas un rôle valide" }
   validates :entity_id,        presence: { message: "Ne peut être vide" }
   validates :aramis_entity_id, presence: { message: "Ne peut être vide" }
   validates :niv_diplome,      presence: { message: "Ne peut être vide si éligibilité saisie" }, unless: :eligibilite_absent?
   validates :nat_diplome,      presence: { message: "Ne peut être vide si éligibilité saisie" }, unless: :eligibilite_absent?
 
-  scope :managers,     -> { where role: "manager" }
+  scope :managers,     -> { where role: "manager_dvt" }
   scope :consultants,  -> { where role: "consultant" }
   scope :responsables, -> { where role: "resp_domaine" }
   scope :actifs,       -> { where etat: "actif" }
@@ -60,6 +60,8 @@ class Collaborator < ActiveRecord::Base
   has_many   :proposals,   class_name: "Collaborator", foreign_key: "consultant_id"
   has_many   :domains,     class_name: "Collaborator", foreign_key: "responsable_id"
 
+  before_create :set_eligibilite
+
   def name
     "#{nom} #{prenom}"
   end
@@ -70,5 +72,15 @@ class Collaborator < ActiveRecord::Base
 
   def eligibilite_absent?
     eligibilite.to_s.empty?
+  end
+
+  def set_eligibilite
+    if niv_diplome == ">= Bac + 3" and nat_diplome == "Scientifique"
+     self.eligibilite = "éligible"
+    elsif niv_diplome == "Bac + 2" and nat_diplome == "Scientifique"
+      self.eligibilite = "éligible-conditionnelle"
+    elsif niv_diplome == "Autres" or nat_diplome == "Autre"
+      self.eligibilite = "non-éligible"
+    end
   end
 end

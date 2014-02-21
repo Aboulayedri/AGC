@@ -24,8 +24,32 @@
           -# = link_to "Consulter", collaborator, :class => 'btn btn-mini'
           -# = link_to "Modifier", edit_collaborator_path(collaborator), :class => 'btn btn-mini'
           -# = link_to "Supprimer", collaborator_path(collaborator), :method => :delete, :data => { :confirm => "Êtes-vous sûr ?" }, :class => 'btn btn-mini btn-danger'
+  -# = link_to "Nouveau Collaborateur", new_collaborator_path, :class => 'btn btn-primary'
 
--# = link_to "Nouveau Collaborateur", new_collaborator_path, :class => 'btn btn-primary'
+- if can? :create, Collaborator
+  = link_to "Nouveau Collaborateur", "#collaborateur", class: 'btn btn-info btn-mini', "data-toggle" => "modal"
+
+- dialog_body = capture do
+  = simple_form_for Collaborator.new, url: collaborators_path, :html => { class: 'form-horizontal' } do |f|
+    = f.input :nom
+    = f.input :prenom, label: "Prénom"
+    = f.input :id_karma
+    = f.input :profil
+    = f.input :role, label: "Rôle", collection: ["admin", "consultant", "manager_dri", "manager_dvt", "resp_domaine", "staffeur"]
+    = f.input :email, placeholder: "prénom.nom@devoteam.com"
+    = f.input :password, as: :hidden, input_html: {value: "devoteam"}
+    = f.input :etat, as: :hidden, input_html: {value: "actif"}
+    = f.input :niv_diplome, collection: [">= Bac + 3", "Bac + 2", "Autres"]
+    = f.input :nat_diplome, collection: ["Autre", "Scientifique"]
+    = f.association :entity, label: "Entité"
+    = f.association :aramis_entity, label: "Entité Aramis"
+    = f.input :commentaire
+    .form-actions
+      = f.submit "Créer Collaborateur", class: 'btn btn-primary'
+= modal_dialog id: "collaborateur",
+header: { show_close: true, dismiss: 'modal', title: "Nouveau Collaborateur"},
+body: dialog_body,
+footer: content_tag(:button, 'Annuler', class: 'btn', "data-dismiss" => "modal")
 
 - @collaborators.each do |collaborator|
   - dialog_body = capture do
@@ -34,7 +58,7 @@
       = f.input :prenom, label: "Prénom"
       = f.input :id_karma
       = f.input :profil
-      = f.input :role, label: "Rôle", collection: ["admin", "consultant", "manager", "manager_dri", "resp_domaine", "staffeur"]
+      = f.input :role, label: "Rôle", collection: ["admin", "consultant", "manager_dri", "manager_dvt", "resp_domaine", "staffeur"]
       = f.input :email, placeholder: "prénom.nom@devoteam.com"
       = f.input :eligibilite, collection: ["éligible", "éligible-conditionnelle", "non-éligible"]
       = f.input :etat, collection: ["actif", "inactif"]

@@ -14,6 +14,8 @@ class AramisEntity < ActiveRecord::Base
   validates :name, presence: { message: "Ne peut être vide" }, uniqueness: { message: "Existe déjà : merci de choisir un autre nom" }
   validates :project_code_id, presence: { message: "Ne peut être vide" }
 
+  default_scope { order :name }
+
   belongs_to :project_code
   has_many :collaborators
 end

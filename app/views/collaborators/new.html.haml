@@ -9,7 +9,7 @@
   = f.input :prenom, label: "Prénom"
   = f.input :id_karma
   = f.input :profil
-  = f.input :role, as: :hidden
+  = f.input :role, label: "Rôle", collection: ["admin", "consultant", "manager_dri", "manager_dvt", "resp_domaine", "staffeur"]
   = f.input :email, placeholder: "prénom.nom@devoteam.com"
   = f.input :password, as: :hidden
   -# = f.input :eligibilite, collection: ["éligible", "non-éligible"], prompt: "Sélenner l'éligibilité du consultant"

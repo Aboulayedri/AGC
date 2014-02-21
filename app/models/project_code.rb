@@ -11,5 +11,7 @@
 class ProjectCode < ActiveRecord::Base
   validates :name, presence: {message: "Ne peut être vide"}, uniqueness: { message: "Existe déjà : merci de choisir un autre nom" }
 
+  default_scope { order :name }
+
   has_many :aramis_entities
 end

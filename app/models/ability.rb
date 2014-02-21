@@ -26,7 +26,7 @@ class Ability
         can :arriver, Proposal do |proposal|
           proposal.project.domain.responsable_id == collaborator.id
         end
-      elsif collaborator.role == "manager"
+      elsif collaborator.role == "manager_dvt"
         can :manage, Entity, manager_id: collaborator.id
         cannot :create, Entity
         can :manage, Proposal, entity: {manager_id: collaborator.id}
