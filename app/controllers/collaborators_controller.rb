@@ -6,7 +6,8 @@ class CollaboratorsController < ApplicationController
   # GET /collaborators
   # GET /collaborators.json
   def index
-    @collaborators = Collaborator.all
+    @collaborators = Collaborator.accessible_by(current_ability)
+    @entities = Entity.accessible_by(current_ability)
   end
 
   # GET /collaborators/1
@@ -32,8 +33,12 @@ class CollaboratorsController < ApplicationController
 
     respond_to do |format|
       if @collaborator.save
-        format.html { redirect_to creer_propositions_entity_path(@collaborator.entity), notice: "Le Collaborateur #{@collaborator.name} a été créé avec succès." }
-        format.json { render action: 'show', status: :created, location: @collaborator }
+        if @collaborator.role == "consultant"
+          format.html { redirect_to creer_propositions_entity_path(@collaborator.entity), notice: "Le Collaborateur #{@collaborator.name} a été créé avec succès." }
+          # format.json { render action: 'show', status: :created, location: @collaborator }
+        else
+          format.html { redirect_to collaborators_path, notice: "Le Collaborateur #{@collaborator.name} a été créé avec succès." }
+        end
       else
         format.html { render action: 'new' }
         format.json { render json: @collaborator.errors, status: :unprocessable_entity }

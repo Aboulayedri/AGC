@@ -18,7 +18,7 @@ class Project < ActiveRecord::Base
   validates :name,                presence: { message: "Ne peut être vide" }, uniqueness: { message: "Existe déjà : merci de choisir un autre nom pour votre projet" }
   validates :domain_id,           presence: { message: "Ne peut être vide" }
   validates :chef_id,             presence: { message: "Ne peut être vide" }
-  validates :maitrise_ouvrage_id, presence: { message: "Ne peut être vide" }
+  # validates :maitrise_ouvrage_id, presence: { message: "Ne peut être vide" }
   validates :code,                presence: { message: "Ne peut être vide" }
   validates :etat,                presence: { message: "Ne peut être vide" }
 

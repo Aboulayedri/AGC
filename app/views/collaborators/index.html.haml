@@ -27,7 +27,7 @@
   -# = link_to "Nouveau Collaborateur", new_collaborator_path, :class => 'btn btn-primary'
 
 - if can? :create, Collaborator
-  = link_to "Nouveau Collaborateur", "#collaborateur", class: 'btn btn-info btn-mini', "data-toggle" => "modal"
+  = link_to "Nouveau Collaborateur", "#collaborateur", class: 'btn btn-info', "data-toggle" => "modal"
 
 - dialog_body = capture do
   = simple_form_for Collaborator.new, url: collaborators_path, :html => { class: 'form-horizontal' } do |f|
@@ -35,13 +35,13 @@
     = f.input :prenom, label: "Prénom"
     = f.input :id_karma
     = f.input :profil
-    = f.input :role, label: "Rôle", collection: ["admin", "consultant", "manager_dri", "manager_dvt", "resp_domaine", "staffeur"]
+    = f.input :role, label: "Rôle", collection: ["admin", "manager_dri", "manager_dvt", "resp_domaine", "staffeur"]
     = f.input :email, placeholder: "prénom.nom@devoteam.com"
     = f.input :password, as: :hidden, input_html: {value: "devoteam"}
     = f.input :etat, as: :hidden, input_html: {value: "actif"}
     = f.input :niv_diplome, collection: [">= Bac + 3", "Bac + 2", "Autres"]
     = f.input :nat_diplome, collection: ["Autre", "Scientifique"]
-    = f.association :entity, label: "Entité"
+    = f.association :entity, label: "Entité", collection: @entities
     = f.association :aramis_entity, label: "Entité Aramis"
     = f.input :commentaire
     .form-actions

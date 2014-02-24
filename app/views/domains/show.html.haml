@@ -24,8 +24,8 @@
 = simple_form_for @project, html: { class: 'form-horizontal well' } do |f|
   = f.input :name, label: "Nom"
   = f.association :domain, as: :hidden
-  = f.association :chef, collection: Collaborator.consultants.actifs, prompt: "Sélectionner un collaborateur"
-  = f.association :maitrise_ouvrage, label: "Maître d'ouvrage", collection: Collaborator.consultants.actifs, prompt: "Sélectionner un collaborateur"
+  = f.association :chef, collection: @consultants_presents, prompt: "Sélectionner un collaborateur"
+  = f.association :maitrise_ouvrage, label: "Maître d'ouvrage", collection: Collaborator.actifs, prompt: "Sélectionner un collaborateur"
   = f.input       :code
   = f.input       :description
   = f.input       :etat, as: :hidden, input_html: {value: "activé"}

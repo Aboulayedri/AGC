@@ -1,5 +1,5 @@
 AGCDri::Application.routes.draw do
-  devise_for :collaborators
+  devise_for :collaborators, controllers: { sessions: "sessions"}
   resources :project_codes
 
   resources :aramis_entities
@@ -30,7 +30,7 @@ AGCDri::Application.routes.draw do
     end
     collection do
       get :publier
-      get :envoyer_codes
+      # get :envoyer_codes
     end
   end
 

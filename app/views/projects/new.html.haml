@@ -2,12 +2,17 @@
 .page-header
   %h1 Nouveau Projet
 -# = render :partial => "form"
+- @consultants_presents = []
+- propositions_presentes = Proposal.where(etat: "arrivée", date: Time.now.all_week)
+- propositions_presentes.each do |proposition|
+  - @consultants_presents << proposition.consultant
+
 = simple_form_for @project, :html => { :class => 'form-horizontal' } do |f|
   = f.input       :name, label: "Nom"
   = f.association :domain, input_html: {disabled: "disabled"}
   = f.association :domain, as: :hidden
-  = f.association :chef, collection: Collaborator.consultants, prompt: "Sélectionner un collaborateur"
-  = f.association :maitrise_ouvrage, label: "Maître d'ouvrage", collection: Collaborator.consultants, prompt: "Sélectionner un collaborateur"
+  = f.association :chef, collection: @consultants_presents, prompt: "Sélectionner un collaborateur"
+  = f.association :maitrise_ouvrage, label: "Maître d'ouvrage", collection: Collaborator.actifs, prompt: "Sélectionner un collaborateur"
   = f.input       :code
   = f.input       :etat, as: :hidden
   = f.input       :description

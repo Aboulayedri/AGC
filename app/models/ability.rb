@@ -34,7 +34,7 @@ class Ability
         cannot :confirmation_affectations, Proposal
         cannot :publier, Proposal
         can :manage, Collaborator, entity: {manager_id: collaborator.id}
-      elsif collaborator.role == "consultant" and Project.where(chef_id: collaborator.id).any? or Project.where(maitrise_ouvrage_id: collaborator.id).any?
+      elsif collaborator.role == "consultant" and Project.where(chef_id: collaborator.id).any? # Chef de projet
         can :read, Collaborator
         can :gestion_affectations, Proposal
         can :confirmation_affectations, Proposal

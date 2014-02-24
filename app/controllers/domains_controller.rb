@@ -12,6 +12,11 @@ class DomainsController < ApplicationController
   # GET /domains/1.json
   def show
     @project = @domain.projects.new
+    @consultants_presents = []
+    propositions_presentes = Proposal.where(etat: "arrivée", date: Time.now.all_week)
+    propositions_presentes.each do |proposition|
+      @consultants_presents << proposition.consultant
+    end
   end
 
   # GET /domains/new
